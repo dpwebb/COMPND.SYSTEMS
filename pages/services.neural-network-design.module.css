@@ -1,0 +1,120 @@
+.archGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+}
+
+.archItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-3);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--accent);
+}
+
+.archIcon {
+  color: var(--accent);
+  width: 2rem;
+  height: 2rem;
+}
+
+.archInfo h4 {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-1);
+  color: var(--foreground);
+}
+
+.archInfo p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.splitSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+}
+
+.halfPanel {
+  height: 100%;
+}
+
+.tagCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.tag {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--info);
+  border: 1px solid var(--info);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-sm);
+}
+
+.infraList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.infraItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-heading);
+  color: var(--secondary);
+  font-size: 1rem;
+}
+
+.deploySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.deployText {
+  font-family: var(--font-family-base);
+  color: var(--muted);
+}
+
+.deployGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.deployCard {
+  background-color: var(--surface);
+  border: 1px solid var(--muted);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.deployTitle {
+  font-family: var(--font-family-heading);
+  color: var(--foreground);
+  font-size: 0.9rem;
+}
+
+.deployDesc {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .archGrid, .splitSection, .deployGrid {
+    grid-template-columns: 1fr;
+  }
+}

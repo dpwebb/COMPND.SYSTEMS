@@ -1,0 +1,209 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--spacing-6);
+  border-bottom: 1px solid var(--muted);
+  padding-bottom: var(--spacing-4);
+}
+
+.pageTitle {
+  font-family: var(--font-family-heading);
+  font-size: 3rem;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.headerDecor {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  font-size: 0.9rem;
+}
+
+.controls {
+  margin-bottom: var(--spacing-8);
+  background-color: var(--surface);
+  padding: var(--spacing-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.filterLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.filterBtn {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-family: var(--font-family-heading);
+  padding: var(--spacing-1) var(--spacing-4);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+.filterBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.filterBtn.active {
+  background-color: var(--primary);
+  color: black;
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-6);
+}
+
+.cardWrapper {
+  display: flex;
+  height: 100%;
+  background-color: var(--card);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.cardWrapper:hover {
+  transform: translateY(-4px);
+}
+
+.cardBar {
+  width: 1.5rem;
+  background-color: var(--muted);
+  flex-shrink: 0;
+}
+
+.cardBar.primary { background-color: var(--primary); }
+.cardBar.secondary { background-color: var(--secondary); }
+.cardBar.accent { background-color: var(--accent); }
+.cardBar.info { background-color: var(--info); }
+.cardBar.muted { background-color: var(--muted); }
+
+.cardContent {
+  flex: 1;
+  padding: var(--spacing-5);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-3);
+}
+
+.stardate {
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.stardate.primary { color: var(--primary); }
+.stardate.secondary { color: var(--secondary); }
+.stardate.accent { color: var(--accent); }
+.stardate.info { color: var(--info); }
+.stardate.muted { color: var(--muted); }
+
+.badge {
+  font-size: 0.7rem;
+  height: 1.25rem;
+}
+
+.cardTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-3);
+}
+
+.titleLink {
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.titleLink:hover {
+  color: var(--primary);
+}
+
+.excerpt {
+  font-family: var(--font-family-base);
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-4);
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--border);
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.actionArea {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.readBtn {
+  color: var(--primary) !important;
+  padding-right: 0 !important;
+}
+
+.readBtn:hover {
+  background-color: transparent !important;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

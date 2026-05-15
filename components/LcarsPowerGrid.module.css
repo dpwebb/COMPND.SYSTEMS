@@ -1,0 +1,133 @@
+.container {
+  position: relative;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Default height based on size */
+  --grid-height: 100px;
+  --core-color: var(--primary);
+  --line-color: var(--muted);
+  --pulse-speed: 2s;
+}
+
+.sm { --grid-height: 60px; }
+.md { --grid-height: 120px; }
+.lg { --grid-height: 200px; }
+
+.container {
+  height: var(--grid-height);
+}
+
+/* Intensity Modifiers */
+.low {
+  --pulse-speed: 4s;
+  --core-color: var(--info);
+}
+.normal {
+  --pulse-speed: 2s;
+  --core-color: var(--primary);
+}
+.high {
+  --pulse-speed: 0.8s;
+  --core-color: var(--warning);
+}
+
+/* Core Element */
+.coreWrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--grid-height) * 0.6);
+  height: calc(var(--grid-height) * 0.6);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coreRing {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--core-color);
+  border-radius: 50%;
+  opacity: 0.5;
+  box-shadow: 0 0 10px var(--core-color);
+}
+
+.corePulse {
+  width: 40%;
+  height: 40%;
+  background-color: var(--core-color);
+  border-radius: 50%;
+  animation: pulse var(--pulse-speed) ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 0 var(--core-color); }
+  50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 20px var(--core-color); }
+}
+
+/* SVG Lines */
+.gridLines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.mainBus {
+  stroke: var(--line-color);
+  stroke-width: 2;
+  opacity: 0.5;
+}
+
+.feedLine {
+  stroke: var(--line-color);
+  stroke-width: 1;
+  opacity: 0.3;
+}
+
+.node {
+  fill: var(--background);
+  stroke: var(--core-color);
+  stroke-width: 2;
+}
+
+/* Flow Particles */
+.flowContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #fff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 4px #fff;
+  opacity: 0;
+  animation: flow 3s linear infinite;
+}
+
+@keyframes flow {
+  0% { left: 0; opacity: 0; }
+  10% { opacity: 1; }
+  45% { opacity: 1; }
+  50% { opacity: 0; transform: translateY(-50%) scale(2); } /* Explode at center */
+  55% { opacity: 0; transform: translateY(-50%) scale(0); left: 50%; }
+  100% { left: 100%; opacity: 0; }
+}

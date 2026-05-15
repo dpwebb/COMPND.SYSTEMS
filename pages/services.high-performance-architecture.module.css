@@ -1,0 +1,139 @@
+.vectorsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+}
+
+.vectorCard {
+  background-color: var(--surface);
+  padding: var(--spacing-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.vectorIcon {
+  color: var(--accent);
+  margin-bottom: var(--spacing-1);
+}
+
+.vectorCard h4 {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.vectorCard p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.metricsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.metricRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.metricLabel {
+  width: 120px;
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--info);
+}
+
+.metricBarContainer {
+  flex: 1;
+  height: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.metricBar {
+  height: 100%;
+  background-color: var(--info);
+  border-radius: var(--radius-sm);
+}
+
+.metricValue {
+  position: absolute;
+  right: var(--spacing-2);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--foreground);
+  font-weight: bold;
+  text-shadow: 0 0 4px var(--background), 0 0 8px var(--background);
+}
+
+.scalingSection {
+  display: flex;
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-4);
+}
+
+.scalingBlock {
+  flex: 1;
+}
+
+.scalingBlock h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1.2rem;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-2);
+}
+
+.scalingBlock p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.divider {
+  width: 1px;
+  background-color: var(--muted);
+  opacity: 0.3;
+}
+
+.monitoringNote {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .vectorsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .scalingSection {
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+  
+  .divider {
+    width: 100%;
+    height: 1px;
+  }
+}

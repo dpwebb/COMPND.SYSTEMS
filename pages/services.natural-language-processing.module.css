@@ -1,0 +1,138 @@
+.capabilitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-6);
+}
+
+.capItem {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: flex-start;
+}
+
+.capIcon {
+  color: var(--accent);
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-1);
+  border-radius: var(--radius-sm);
+}
+
+.capContent h4 {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-1);
+  color: var(--foreground);
+}
+
+.capContent p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.llmSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.llmIntro {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.llmIcon {
+  color: var(--info);
+}
+
+.llmIntro p {
+  font-family: var(--font-family-base);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--foreground);
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.techBadge {
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--background);
+  background-color: var(--info);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.chatSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+  align-items: center;
+}
+
+.chatVisual {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+}
+
+.botIcon {
+  color: var(--muted);
+}
+
+.chatBubble {
+  background-color: var(--muted);
+  color: var(--background);
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius);
+  border-top-left-radius: 0;
+  font-family: var(--font-family-base);
+  font-size: 0.9rem;
+}
+
+.chatFeatures ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.chatFeatures li {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.chatFeatures li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background-color: var(--muted);
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .capabilitiesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chatSection {
+    grid-template-columns: 1fr;
+  }
+}

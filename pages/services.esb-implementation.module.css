@@ -1,0 +1,172 @@
+.capabilitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.capability {
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--info);
+}
+
+.capIcon {
+  color: var(--info);
+  margin-bottom: var(--spacing-2);
+  width: 24px;
+  height: 24px;
+}
+
+.capability h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  color: var(--foreground);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.capability p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.archSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+}
+
+.patternList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.patternItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.patternHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: var(--info);
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+}
+
+.patternItem p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+  padding-left: calc(18px + var(--spacing-2));
+}
+
+.techGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.techCategory span {
+  display: block;
+  font-family: var(--font-family-heading);
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.techTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.tag {
+  background-color: var(--surface);
+  border: 1px solid var(--info);
+  color: var(--info);
+  padding: 2px 8px;
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+.flowVisual {
+  margin-top: var(--spacing-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-6);
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  border: 1px dashed var(--muted);
+}
+
+.flowNode {
+  background-color: var(--card);
+  padding: var(--spacing-3);
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+}
+
+.flowArrow {
+  color: var(--info);
+  font-family: var(--font-family-monospace);
+}
+
+.flowEsb {
+  background-color: rgba(var(--info-rgb), 0.1);
+  border: 2px solid var(--info);
+  padding: var(--spacing-3);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+  min-width: 200px;
+}
+
+.esbLabel {
+  color: var(--info);
+  font-family: var(--font-family-heading);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+.esbInner {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.esbInner span {
+  font-family: var(--font-family-monospace);
+  font-size: 0.7rem;
+  color: var(--foreground);
+  background-color: rgba(0,0,0,0.5);
+  padding: 2px 4px;
+}
+
+@media (max-width: 768px) {
+  .capabilitiesGrid, .archSection {
+    grid-template-columns: 1fr;
+  }
+  
+  .flowVisual {
+    flex-direction: column;
+  }
+  
+  .flowArrow {
+    transform: rotate(90deg);
+  }
+}

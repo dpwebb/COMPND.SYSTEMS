@@ -1,0 +1,122 @@
+.codeSection {
+  background-color: #1a1a1a;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: var(--spacing-8);
+  border: 1px solid var(--muted);
+  font-family: 'Fira Code', monospace;
+}
+
+.codeHeader {
+  background-color: #2a2a2a;
+  padding: var(--spacing-2) var(--spacing-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.codeTitle {
+  color: var(--foreground);
+  font-size: 0.9rem;
+}
+
+.codeLang {
+  color: var(--secondary);
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.codeBlock {
+  padding: var(--spacing-4);
+  margin: 0;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+.codeFooter {
+  background-color: #2a2a2a;
+  padding: var(--spacing-2) var(--spacing-4);
+  border-top: 1px solid #333;
+}
+
+.statusItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: 0.8rem;
+  color: var(--success);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--success);
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--success);
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-8);
+}
+
+.featureCard {
+  background-color: var(--surface);
+  padding: var(--spacing-6);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--secondary);
+}
+
+.featureIcon {
+  color: var(--secondary);
+  margin-bottom: var(--spacing-3);
+  width: 2rem;
+  height: 2rem;
+}
+
+.featureCard h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-2);
+  color: var(--foreground);
+}
+
+.featureCard p {
+  font-family: var(--font-family-base);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.techStack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.techItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-sm);
+  color: var(--secondary);
+  font-family: var(--font-family-heading);
+}
+
+@media (max-width: 768px) {
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .techStack {
+    grid-template-columns: 1fr 1fr;
+  }
+}

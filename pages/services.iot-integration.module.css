@@ -1,0 +1,186 @@
+.protocolGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+}
+
+.protocolCard {
+  background-color: var(--surface);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+  padding: var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-3);
+}
+
+.protocolIcon {
+  color: var(--muted);
+  margin-bottom: var(--spacing-2);
+}
+
+.protocolCard h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.protocolCard p {
+  font-family: var(--font-family-base);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.telemetryContainer {
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  gap: var(--spacing-6);
+  align-items: center;
+}
+
+.chartArea {
+  height: 200px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius);
+  position: relative;
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chartGrid {
+  flex: 1;
+  border-left: 1px solid var(--muted);
+  border-bottom: 1px solid var(--muted);
+  position: relative;
+  margin-bottom: var(--spacing-2);
+}
+
+.chartLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--muted-rgb), 0.1) 100%
+  );
+  clip-path: polygon(0 100%, 20% 40%, 40% 70%, 60% 55%, 80% 80%, 100% 20%, 100% 100%);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.chartPoint {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: var(--muted);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px var(--muted);
+}
+
+.chartLabels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-monospace);
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding-left: var(--spacing-2);
+}
+
+.telemetryStats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted);
+  background-color: var(--surface);
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+}
+
+.statLabel {
+  flex: 1;
+}
+
+.statValue {
+  color: var(--foreground);
+  font-weight: bold;
+}
+
+.useCases {
+  margin-top: var(--spacing-8);
+}
+
+.sectionTitle {
+  font-family: var(--font-family-heading);
+  color: var(--muted);
+  margin-bottom: var(--spacing-6);
+  font-size: 1.2rem;
+}
+
+.sectorList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.sectorItem {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: flex-start;
+}
+
+.sectorIcon {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--surface);
+  border: 1px solid var(--muted);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.sectorContent h4 {
+  font-family: var(--font-family-heading);
+  color: var(--foreground);
+  font-size: 1.1rem;
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.sectorContent p {
+  font-family: var(--font-family-base);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .protocolGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .telemetryContainer {
+    grid-template-columns: 1fr;
+  }
+}

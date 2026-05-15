@@ -1,0 +1,219 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  animation: fadeIn 0.3s ease-out;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  border-bottom: 1px solid var(--muted);
+  padding-bottom: var(--spacing-4);
+}
+
+.breadcrumb {
+  margin-bottom: var(--spacing-2);
+}
+
+.backBtn {
+  color: var(--muted);
+  padding-left: 0;
+}
+
+.backBtn:hover {
+  color: var(--primary);
+}
+
+.titleBlock {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.pageTitle {
+  font-family: var(--font-family-heading);
+  font-size: 3rem;
+  color: var(--foreground);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.decorLine {
+  flex: 1;
+  height: 1.5rem;
+  border-radius: 1rem;
+  opacity: 0.8;
+}
+
+.decorLine.primary { background-color: var(--primary); }
+.decorLine.secondary { background-color: var(--secondary); }
+.decorLine.accent { background-color: var(--accent); }
+.decorLine.info { background-color: var(--info); }
+.decorLine.muted { background-color: var(--muted); }
+
+.serviceId {
+  font-family: var(--font-family-monospace);
+  font-size: 1rem;
+  color: var(--muted);
+  background-color: var(--surface);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.pageSubtitle {
+  font-family: var(--font-family-monospace);
+  color: var(--primary);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  max-width: 800px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 280px);
+  min-width: 0;
+  gap: var(--spacing-6);
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+.introText {
+  font-family: var(--font-family-base);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--muted);
+  border-left: 2px solid var(--primary);
+  padding-left: var(--spacing-4);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  min-width: 0;
+}
+
+.sidebarPanel {
+  margin-bottom: 0;
+}
+
+.ctaContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.ctaText {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.ctaBtn {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.relatedLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.relatedLink {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.relatedLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.systemStatus {
+  margin-top: auto;
+  padding: var(--spacing-4);
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.pulse {
+  color: var(--success);
+  animation: pulse 2s infinite;
+}
+
+.decorBlock {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--muted),
+    var(--muted) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  margin-top: var(--spacing-2);
+  opacity: 0.3;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar {
+    order: 2;
+  }
+  
+  .titleBlock {
+    flex-wrap: wrap;
+  }
+  
+  .pageTitle {
+    font-size: 2rem;
+  }
+}

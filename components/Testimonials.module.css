@@ -1,0 +1,123 @@
+.container {
+  width: 100%;
+  margin-bottom: var(--spacing-8);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.title {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.decorLine {
+  height: 1rem;
+  flex: 1;
+  background-color: var(--accent);
+  border-radius: 0.5rem;
+  opacity: 0.5;
+}
+
+.carousel {
+  width: 100%;
+}
+
+.carouselItem {
+  flex: 0 0 100%;
+  padding: 0 var(--spacing-2);
+}
+
+@media (min-width: 768px) {
+  .carouselItem {
+    flex: 0 0 50%;
+  }
+}
+
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: var(--spacing-6);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quoteIcon {
+  color: var(--accent);
+  opacity: 0.5;
+}
+
+.rating {
+  display: flex;
+  gap: 2px;
+  color: var(--warning);
+}
+
+.quote {
+  font-family: var(--font-family-monospace);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--foreground);
+  flex: 1;
+  font-style: italic;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid var(--border);
+  padding-top: var(--spacing-4);
+}
+
+.clientInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.clientName {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.clientRole {
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.idBadge {
+  font-family: var(--font-family-monospace);
+  font-size: 0.7rem;
+  background-color: var(--surface);
+  padding: 2px var(--spacing-2);
+  border-radius: 4px;
+  color: var(--muted);
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-4);
+  padding-right: var(--spacing-2);
+}

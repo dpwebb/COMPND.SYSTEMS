@@ -1,0 +1,146 @@
+.approachesGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.approachItem {
+  display: flex;
+  gap: var(--spacing-4);
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-4);
+  border-radius: var(--radius);
+  align-items: flex-start;
+}
+
+.approachIcon {
+  color: var(--secondary);
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.approachContent h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-1);
+}
+
+.approachContent p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.methodologySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.methodText {
+  font-family: var(--font-family-base);
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.stepsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) 0;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.stepNum {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.stepLabel {
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.connector {
+  flex: 1;
+  height: 2px;
+  background-color: var(--accent);
+  opacity: 0.3;
+  margin: 0 var(--spacing-4);
+  margin-bottom: 1.5rem; /* Align with numbers */
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-4);
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  gap: var(--spacing-2);
+}
+
+.statIcon {
+  color: var(--secondary);
+  margin-bottom: var(--spacing-2);
+}
+
+.statValue {
+  font-family: var(--font-family-heading);
+  font-size: 1.2rem;
+  color: var(--foreground);
+}
+
+.statDesc {
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .stepsContainer {
+    flex-direction: column;
+    gap: var(--spacing-4);
+    align-items: flex-start;
+  }
+  
+  .connector {
+    width: 2px;
+    height: 20px;
+    margin: 0;
+    margin-left: 1rem;
+  }
+  
+  .step {
+    flex-direction: row;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}

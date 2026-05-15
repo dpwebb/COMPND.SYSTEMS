@@ -1,0 +1,163 @@
+.pipelineSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--surface);
+  padding: var(--spacing-8);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-8);
+  border: 1px solid var(--muted);
+}
+
+.pipelineStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.stepIcon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary);
+  border: 2px solid var(--secondary);
+}
+
+.stepIcon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.stepLabel {
+  font-family: var(--font-family-heading);
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.pipelineArrow {
+  font-family: var(--font-family-monospace);
+  font-size: 2rem;
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-8);
+}
+
+.toolList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.toolList li {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.bullet {
+  color: var(--secondary);
+  margin-right: var(--spacing-2);
+}
+
+.strategyList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.strategyItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.strategyTitle {
+  font-family: var(--font-family-heading);
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+.strategyDesc {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--secondary);
+  padding-bottom: var(--spacing-2);
+  display: inline-block;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.metricCard {
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: var(--spacing-6);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-2);
+}
+
+.metricIcon {
+  color: var(--secondary);
+  margin-bottom: var(--spacing-2);
+  width: 2rem;
+  height: 2rem;
+}
+
+.metricValue {
+  font-family: var(--font-family-heading);
+  font-size: 2.5rem;
+  color: var(--foreground);
+  line-height: 1;
+}
+
+.metricLabel {
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .pipelineSection {
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+  
+  .pipelineArrow {
+    transform: rotate(90deg);
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}

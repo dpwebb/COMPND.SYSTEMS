@@ -1,0 +1,1 @@
+build a visually appealing website for  https://compnd.systems in the Star Trek LCARS fashion. COMPND.SYSTEMS  a high functioning, global, software development  company. 

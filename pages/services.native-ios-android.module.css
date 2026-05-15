@@ -1,0 +1,168 @@
+.ecosystemsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-8);
+}
+
+.platformBlock {
+  background-color: var(--surface);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+  padding: var(--spacing-6);
+  position: relative;
+  overflow: hidden;
+}
+
+.platformBlock::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--muted);
+}
+
+.platformIcon {
+  color: var(--muted);
+  margin-bottom: var(--spacing-4);
+}
+
+.platformTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-4);
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-4);
+}
+
+.techBadge {
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: black;
+  background-color: var(--muted);
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-sm);
+}
+
+.platformDesc {
+  font-family: var(--font-family-base);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-6);
+}
+
+.metricCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.metricIcon {
+  color: var(--muted);
+  margin-bottom: var(--spacing-2);
+}
+
+.metricCard h4 {
+  font-family: var(--font-family-heading);
+  color: var(--foreground);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.metricCard p {
+  font-family: var(--font-family-base);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.storeSection {
+  margin-top: var(--spacing-8);
+  border-top: 1px solid var(--muted);
+  padding-top: var(--spacing-6);
+}
+
+.storeTitle {
+  font-family: var(--font-family-heading);
+  color: var(--muted);
+  margin-bottom: var(--spacing-6);
+  font-size: 1.2rem;
+}
+
+.storeSteps {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+}
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.stepNumber {
+  font-family: var(--font-family-heading);
+  font-size: 2rem;
+  color: var(--muted);
+  opacity: 0.5;
+  line-height: 1;
+}
+
+.stepContent h4 {
+  font-family: var(--font-family-heading);
+  color: var(--foreground);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.stepContent p {
+  font-family: var(--font-family-base);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.stepConnector {
+  width: 1px;
+  height: 100px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
+  margin-top: var(--spacing-4);
+}
+
+@media (max-width: 768px) {
+  .ecosystemsContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .storeSteps {
+    flex-direction: column;
+  }
+
+  .stepConnector {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, var(--muted), transparent);
+    margin: var(--spacing-2) 0;
+  }
+}

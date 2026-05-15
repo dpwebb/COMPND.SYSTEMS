@@ -1,0 +1,203 @@
+.patternGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.patternCard {
+  background-color: var(--surface);
+  border: 1px solid var(--muted);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s;
+}
+
+.patternCard:hover {
+  border-color: var(--info);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: var(--info);
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-3);
+}
+
+.patternCard p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.detailsSection {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--spacing-6);
+}
+
+.modelComparison {
+  display: flex;
+  gap: var(--spacing-6);
+}
+
+.modelItem {
+  flex: 1;
+}
+
+.modelItem h4 {
+  color: var(--foreground);
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.modelItem p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: var(--spacing-3);
+}
+
+.useCase {
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--info);
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-1) var(--spacing-2);
+  display: inline-block;
+}
+
+.divider {
+  width: 1px;
+  background-color: var(--muted);
+  opacity: 0.3;
+}
+
+.conflictList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.conflictList li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.conflictList li svg {
+  color: var(--warning);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.conflictList strong {
+  color: var(--foreground);
+}
+
+.cdcVisual {
+  background-color: var(--surface);
+  border: 1px solid var(--info);
+  border-radius: var(--radius);
+  padding: var(--spacing-4);
+  margin-top: var(--spacing-4);
+}
+
+.cdcLabel {
+  font-family: var(--font-family-heading);
+  color: var(--info);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-4);
+  opacity: 0.8;
+}
+
+.cdcFlow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-4);
+}
+
+.cdcNode {
+  background-color: var(--card);
+  border: 1px solid var(--muted);
+  padding: var(--spacing-3);
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--foreground);
+  border-radius: var(--radius-sm);
+  z-index: 2;
+}
+
+.cdcConnector {
+  flex: 1;
+  height: 2px;
+  background-color: var(--muted);
+  position: relative;
+  opacity: 0.5;
+}
+
+.movingDot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--info);
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  animation: moveRight 2s infinite linear;
+}
+
+@keyframes moveRight {
+  0% { left: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .patternGrid, .detailsSection {
+    grid-template-columns: 1fr;
+  }
+  
+  .modelComparison {
+    flex-direction: column;
+  }
+  
+  .divider {
+    width: 100%;
+    height: 1px;
+  }
+  
+  .cdcFlow {
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+  
+  .cdcConnector {
+    width: 2px;
+    height: 30px;
+  }
+  
+  .movingDot {
+    animation: moveDown 2s infinite linear;
+    left: -2px;
+  }
+  
+  @keyframes moveDown {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+}

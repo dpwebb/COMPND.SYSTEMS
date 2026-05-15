@@ -1,0 +1,340 @@
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--spacing-8);
+  min-height: 60vh;
+  align-items: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.heroTitle {
+  font-family: var(--font-family-heading);
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.9;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.heroSubtitle {
+  font-family: var(--font-family-monospace);
+  font-size: 1.1rem;
+  color: var(--foreground);
+  max-width: 600px;
+  line-height: 1.6;
+  border-left: 2px solid var(--accent);
+  padding-left: var(--spacing-4);
+}
+
+.heroActions {
+  display: flex;
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-4);
+}
+
+.ctaButton {
+  background-color: var(--secondary) !important;
+  color: black !important;
+  font-family: var(--font-family-heading) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  border-radius: 1.5rem !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+
+.secondaryButton {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  font-family: var(--font-family-heading) !important;
+  letter-spacing: 0.1em !important;
+  border-radius: 1.5rem !important;
+}
+
+.heroVisual {
+  position: relative;
+  height: 100%;
+  min-height: 400px;
+  background: radial-gradient(circle at center, var(--surface) 0%, transparent 70%);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  /* Ensure children can be positioned absolutely */
+  display: flex; 
+  flex-direction: column;
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(var(--muted) 1px, transparent 1px),
+    linear-gradient(90deg, var(--muted) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.1;
+}
+
+.scannerLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+  animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.sectionSpacer {
+  height: var(--spacing-12);
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-6);
+}
+
+.serviceCard {
+  background-color: var(--card);
+  padding: var(--spacing-6);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.serviceCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+}
+
+.serviceIcon {
+  color: var(--primary);
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: var(--spacing-4);
+}
+
+.serviceCard h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.serviceCard p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.newsletterSection {
+  margin-bottom: var(--spacing-8);
+}
+
+.newsletterContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.newsletterDescription {
+  flex: 1;
+  min-width: 300px;
+}
+
+.newsletterDescription h3 {
+  font-family: var(--font-family-heading);
+  color: var(--accent);
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.newsletterDescription p {
+  font-family: var(--font-family-monospace);
+  color: var(--foreground);
+  max-width: 500px;
+}
+
+.aboutContent {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--spacing-8);
+}
+
+.aboutText {
+  font-family: var(--font-family-monospace);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-4);
+}
+
+.statItem {
+  background-color: var(--surface);
+  padding: var(--spacing-4);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--accent);
+}
+
+.statValue {
+  font-family: var(--font-family-heading);
+  font-size: 2.5rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.statLabel {
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.footer {
+  margin-top: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.footerBar {
+  height: 1.5rem;
+  background-color: var(--muted);
+  border-radius: 1rem;
+  width: 100%;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--muted);
+  padding: 0 var(--spacing-4);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: var(--spacing-4);
+  }
+  
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.95rem;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .ctaButton,
+  .secondaryButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sectionSpacer {
+    height: var(--spacing-6);
+  }
+
+  .servicesGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+
+  .serviceCard {
+    padding: var(--spacing-4);
+  }
+
+  .serviceCard h3 {
+    font-size: 1.1rem;
+  }
+
+  .newsletterDescription {
+    min-width: auto;
+  }
+
+  .newsletterContent {
+    gap: var(--spacing-4);
+  }
+  
+  .aboutContent {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2);
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+
+  .statLabel {
+    font-size: 0.65rem;
+  }
+
+  .footer {
+    margin-top: var(--spacing-8);
+  }
+
+  .footerContent {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-1);
+    text-align: center;
+  }
+  
+  .heroVisual {
+    display: none;
+  }
+}

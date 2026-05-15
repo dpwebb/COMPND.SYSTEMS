@@ -1,0 +1,48 @@
+.container {
+  position: relative;
+  display: inline-block; /* Or block, depending on need. inline-block is safer for wrapping buttons */
+  overflow: hidden;
+  vertical-align: middle;
+  /* Ensure the container takes the shape of children if they have border-radius */
+  border-radius: inherit; 
+}
+
+.rippleContainer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 0; /* Behind content if content has z-index, but usually ripples are on top. */
+}
+
+/* 
+   Note: If children have a background color and z-index, the ripple might be hidden.
+   Usually ripples are placed *over* the content. 
+   Let's adjust z-index to be above.
+*/
+.rippleContainer {
+  z-index: 1; 
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: var(--primary); /* Default color */
+  opacity: 0;
+  transform: scale(0);
+  animation-name: rippleEffect;
+  animation-timing-function: linear;
+  pointer-events: none;
+}
+
+@keyframes rippleEffect {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.5); /* Expand beyond container */
+    opacity: 0;
+  }
+}

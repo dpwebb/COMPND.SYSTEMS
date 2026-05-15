@@ -1,0 +1,54 @@
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: 2px var(--spacing-3);
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  font-size: 0.75rem;
+  transition: opacity var(--animation-duration-fast);
+  color: black;
+  text-transform: uppercase;
+}
+
+.toggleButton:hover {
+  opacity: 0.8;
+}
+
+.enabled {
+  background-color: var(--accent);
+}
+
+.disabled {
+  background-color: var(--muted);
+  opacity: 0.6;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .toggleButton {
+    background-color: transparent;
+    padding: 0;
+    color: var(--foreground);
+  }
+  
+  .enabled {
+    color: var(--accent);
+  }
+  
+  .disabled {
+    color: var(--muted);
+  }
+}

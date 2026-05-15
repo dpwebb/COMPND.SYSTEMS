@@ -1,0 +1,163 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+}
+
+.pageTitle {
+  font-family: var(--font-family-heading);
+  font-size: 3rem;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.headerDecor {
+  height: 2rem;
+  flex: 1;
+  background-color: var(--primary);
+  border-radius: 1rem;
+  opacity: 0.5;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+  background-color: var(--surface);
+  padding: var(--spacing-4);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.filterLabel {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: 0.9rem;
+}
+
+.filterButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.filterBtn {
+  border-radius: 1rem;
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.05em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: var(--spacing-6);
+}
+
+.projectPanel {
+  height: 100%;
+}
+
+.projectCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--spacing-4);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+}
+
+.projectTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.75rem;
+  color: var(--foreground);
+  line-height: 1.1;
+}
+
+.categoryBadge {
+  font-family: var(--font-family-monospace);
+  font-size: 0.7rem;
+}
+
+.clientInfo {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--spacing-2);
+}
+
+.label {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.description {
+  font-family: var(--font-family-base);
+  line-height: 1.6;
+  color: var(--foreground);
+  flex: 1;
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.techTag {
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--primary);
+  background-color: rgba(0, 149, 255, 0.1);
+  padding: 2px var(--spacing-2);
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-2);
+}
+
+.detailsBtn {
+  color: var(--accent);
+}
+
+.detailsBtn:hover {
+  color: var(--foreground);
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--spacing-12);
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+  
+  .headerDecor {
+    width: 100%;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

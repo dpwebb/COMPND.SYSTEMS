@@ -1,0 +1,123 @@
+.protocolsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.protocolCard {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--info);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.protocolHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: var(--info);
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+.protocolCard p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.splitSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-6);
+}
+
+.halfPanel {
+  height: 100%;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.featureList li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--foreground);
+}
+
+.featureList li svg {
+  color: var(--info);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.techItem {
+  background-color: var(--surface);
+  border: 1px solid var(--info);
+  color: var(--info);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-family: var(--font-family-heading);
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+
+.lifecycleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-6);
+}
+
+.lifecycleItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.lifecycleItem h4 {
+  color: var(--info);
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  margin: 0;
+  border-bottom: 1px solid var(--muted);
+  padding-bottom: var(--spacing-1);
+}
+
+.lifecycleItem p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .splitSection {
+    grid-template-columns: 1fr;
+  }
+  
+  .lifecycleGrid {
+    grid-template-columns: 1fr;
+  }
+}

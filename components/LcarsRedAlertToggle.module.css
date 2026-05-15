@@ -1,0 +1,61 @@
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  padding: 2px var(--spacing-3);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--animation-duration-normal) ease;
+  font-family: var(--font-family-monospace);
+  color: var(--foreground);
+  height: 1.5rem;
+}
+
+.toggleButton:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.label {
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: inherit;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--muted);
+  transition: all var(--animation-duration-normal) ease;
+}
+
+/* Active State (Red Alert ON) */
+.toggleButton.active {
+  background-color: var(--error);
+  color: var(--error-foreground);
+  animation: glow 2s infinite;
+}
+
+.active .dot {
+  background-color: var(--error-foreground);
+  box-shadow: 0 0 8px var(--error-foreground);
+}
+
+.active .label {
+  color: var(--error-foreground);
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px var(--error); }
+  50% { box-shadow: 0 0 20px var(--error); }
+  100% { box-shadow: 0 0 5px var(--error); }
+}
+
+@media (max-width: 768px) {
+  .toggleButton {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}

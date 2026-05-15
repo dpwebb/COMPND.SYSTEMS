@@ -1,0 +1,67 @@
+.container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  padding: var(--spacing-4);
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  pointer-events: none; /* Let clicks pass through if needed, though mostly visual */
+  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.codeStream {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  animation: scrollUp 20s linear infinite;
+  opacity: 0.7;
+}
+
+.line {
+  white-space: nowrap;
+  opacity: 0.8;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.lineNumber {
+  color: var(--muted);
+  opacity: 0.5;
+  margin-right: var(--spacing-2);
+  user-select: none;
+}
+
+/* Syntax Highlighting Colors */
+.textDefault {
+  color: var(--foreground);
+}
+
+.textCommand {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.textSuccess {
+  color: var(--success);
+}
+
+.textWarning {
+  color: var(--warning);
+}
+
+.textError {
+  color: var(--error);
+}
+
+.textInfo {
+  color: var(--info);
+}
+
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-33.33%); /* Scroll one-third (one full set of the tripled list) */
+  }
+}

@@ -1,0 +1,195 @@
+.memberCard {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.memberCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-color);
+}
+
+.primary { --card-color: var(--primary); }
+.secondary { --card-color: var(--secondary); }
+.accent { --card-color: var(--accent); }
+.destructive { --card-color: var(--error); }
+
+.cardHeader {
+  background-color: var(--card-color);
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  padding-left: var(--spacing-4);
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+.memberId {
+  font-family: var(--font-family-monospace);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: black;
+}
+
+.headerBar {
+  flex: 1;
+  height: 60%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.cardBody {
+  padding: var(--spacing-4);
+  display: flex;
+  flex: 1;
+  gap: var(--spacing-4);
+  justify-content: space-between;
+}
+
+.memberInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  min-width: 0; /* Prevents text overflow issues */
+}
+
+.memberName {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  color: var(--foreground);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.memberRole {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-2);
+}
+
+.badges {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  margin-bottom: auto; /* Pushes content below to bottom if space allows */
+}
+
+.badge {
+  font-size: 0.65rem;
+  height: 1.25rem;
+}
+
+.specBox {
+  margin-top: var(--spacing-4);
+  background-color: var(--surface);
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-monospace);
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid var(--card-color);
+}
+
+.specLabel {
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+
+.specValue {
+  color: var(--card-color);
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Image Section - Right Side */
+.imageContainer {
+  flex-shrink: 0;
+  width: 120px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  padding: 4px;
+  background-color: color-mix(in srgb, var(--card-color) 20%, transparent);
+  border: 1px solid var(--card-color);
+  border-radius: var(--radius-sm);
+}
+
+.image {
+  width: 100%;
+  height: 150px; /* Rectangular portrait aspect ratio */
+  object-fit: cover;
+  display: block;
+  filter: sepia(20%) contrast(1.1); /* Slight retro sci-fi look */
+}
+
+/* Decorative corner brackets for LCARS feel */
+.frameDecorationTop {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 20px;
+  height: 20px;
+  border-top: 3px solid var(--card-color);
+  border-right: 3px solid var(--card-color);
+}
+
+.frameDecorationBottom {
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  width: 20px;
+  height: 20px;
+  border-bottom: 3px solid var(--card-color);
+  border-left: 3px solid var(--card-color);
+}
+
+@media (max-width: 600px) {
+  .cardBody {
+    flex-direction: column-reverse; /* Image on top on mobile, or bottom? LCARS usually consistent. Let's stack naturally. */
+    /* Actually requirement says Image RIGHT. On mobile, usually simpler to stack. */
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+  }
+
+  .imageContainer {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: var(--spacing-4);
+  }
+
+  .imageFrame {
+    width: 140px; /* Slightly larger on mobile focus */
+  }
+
+  .memberInfo {
+    width: 100%;
+    align-items: center;
+  }
+  
+  .specBox {
+    width: 100%;
+    text-align: left;
+    margin-top: var(--spacing-2);
+  }
+  
+  .badges {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,134 @@
+.pipelineVisual {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--surface);
+  padding: var(--spacing-8);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-8);
+  border: 1px solid var(--muted);
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+.stageIcon {
+  width: 4rem;
+  height: 4rem;
+  background-color: rgba(33, 150, 243, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  margin-bottom: var(--spacing-3);
+  border: 2px solid var(--primary);
+}
+
+.stageLabel {
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-2);
+}
+
+.stageDesc {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: 150px;
+}
+
+.flowArrow {
+  font-family: var(--font-family-heading);
+  font-size: 2rem;
+  color: var(--muted);
+  padding: 0 var(--spacing-4);
+}
+
+.toolsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-6);
+}
+
+.toolCategory h4 {
+  font-family: var(--font-family-heading);
+  color: var(--primary);
+  margin-bottom: var(--spacing-3);
+  border-bottom: 1px solid var(--muted);
+  padding-bottom: var(--spacing-2);
+}
+
+.toolList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.toolTag {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--foreground);
+  background-color: var(--surface);
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--muted);
+}
+
+.featuresGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-8);
+}
+
+.featureRow {
+  display: flex;
+  gap: var(--spacing-4);
+  background-color: var(--surface);
+  padding: var(--spacing-6);
+  border-radius: var(--radius);
+  align-items: flex-start;
+}
+
+.rowIcon {
+  color: var(--primary);
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+.rowContent h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-2);
+  color: var(--foreground);
+}
+
+.rowContent p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .pipelineVisual {
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .flowArrow {
+    transform: rotate(90deg);
+  }
+
+  .toolsGrid {
+    grid-template-columns: 1fr;
+  }
+}

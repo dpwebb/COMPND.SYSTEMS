@@ -1,0 +1,153 @@
+.modulesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.moduleCard {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  padding: var(--spacing-4);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  align-items: center;
+  text-align: center;
+}
+
+.moduleIcon {
+  color: var(--accent);
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.moduleCard h3 {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  color: var(--foreground);
+}
+
+.moduleCard p {
+  font-family: var(--font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.sectorList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.sectorItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.sectorHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.sectorTitle {
+  font-family: var(--font-family-heading);
+  color: var(--secondary);
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.sectorLine {
+  flex: 1;
+  height: 1px;
+  background-color: var(--secondary);
+  opacity: 0.3;
+}
+
+.sectorItem p {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding-left: var(--spacing-2);
+}
+
+.edgeSection {
+  display: flex;
+  gap: var(--spacing-6);
+  align-items: center;
+}
+
+.edgeGraphic {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.edgeIcon {
+  color: var(--muted);
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-2);
+  border-radius: 50%;
+}
+
+.edgeConnection {
+  width: 2rem;
+  height: 2px;
+  background-color: var(--muted);
+  opacity: 0.5;
+}
+
+.edgeContent {
+  flex: 1;
+}
+
+.edgeContent h4 {
+  font-family: var(--font-family-heading);
+  color: var(--foreground);
+  margin-bottom: var(--spacing-2);
+}
+
+.edgeContent p {
+  font-family: var(--font-family-base);
+  color: var(--muted);
+  margin-bottom: var(--spacing-4);
+  line-height: 1.5;
+}
+
+.specs {
+  display: flex;
+  gap: var(--spacing-6);
+}
+
+.specItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.specLabel {
+  font-family: var(--font-family-monospace);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.specValue {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .edgeSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .edgeGraphic {
+    width: 100%;
+    justify-content: center;
+  }
+}

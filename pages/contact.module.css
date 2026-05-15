@@ -1,0 +1,157 @@
+.pageHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+}
+
+.title {
+  font-family: var(--font-family-heading);
+  font-size: 3rem;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.decorLine {
+  height: 2rem;
+  flex: 1;
+  background-color: var(--primary);
+  border-radius: 1rem;
+  opacity: 0.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-8);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-4);
+}
+
+.submitBtn {
+  background-color: var(--primary) !important;
+  color: black !important;
+  font-family: var(--font-family-heading) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  width: 100%;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.infoItem {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: flex-start;
+}
+
+.infoIcon {
+  color: var(--secondary);
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+.infoItem h4 {
+  font-family: var(--font-family-heading);
+  color: var(--secondary);
+  margin-bottom: var(--spacing-1);
+  font-size: 1.1rem;
+}
+
+.infoItem p {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.statusPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--spacing-2);
+}
+
+.statusRow:last-child {
+  border-bottom: none;
+}
+
+.online {
+  color: var(--success);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+  }
+
+  .title {
+    font-size: 2rem;
+    white-space: normal;
+  }
+  
+  .decorLine {
+    width: 100%;
+    height: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+  
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2);
+  }
+
+  .infoColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .infoItem h4 {
+    font-size: 1rem;
+  }
+
+  .infoItem p {
+    font-size: 0.85rem;
+  }
+
+  .statusRow {
+    font-size: 0.8rem;
+  }
+}

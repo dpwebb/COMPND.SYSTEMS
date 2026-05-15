@@ -1,0 +1,304 @@
+.header {
+  margin-bottom: var(--spacing-8);
+  border-bottom: 1px solid var(--muted);
+  padding-bottom: var(--spacing-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.pageTitle {
+  font-family: var(--font-family-heading);
+  font-size: 3rem;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.headerDecor {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-8);
+  align-items: start;
+}
+
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.panelContent {
+  padding: var(--spacing-2);
+}
+
+.instruction {
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  margin-bottom: var(--spacing-4);
+  font-size: 0.9rem;
+}
+
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+}
+
+.checkboxCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  padding: var(--spacing-3);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.checkboxCard:hover {
+  border-color: var(--primary);
+  background-color: color-mix(in srgb, var(--primary) 10%, var(--surface));
+}
+
+.checkboxCard.checked {
+  border-color: var(--primary);
+  background-color: color-mix(in srgb, var(--primary) 20%, var(--surface));
+}
+
+.checkboxHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  pointer-events: none; /* Let the card handle click */
+}
+
+.checkboxLabel {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.errorMsg {
+  margin-top: var(--spacing-2);
+}
+
+.sliderGroup {
+  margin-bottom: var(--spacing-6);
+}
+
+.sliderHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-3);
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+}
+
+.sliderValue {
+  color: var(--secondary);
+}
+
+.complexityGroup {
+  margin-top: var(--spacing-6);
+}
+
+.groupLabel {
+  display: block;
+  font-family: var(--font-family-heading);
+  margin-bottom: var(--spacing-3);
+  font-size: 1.1rem;
+}
+
+.complexityOptions {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.complexityBtn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  padding: var(--spacing-3);
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.complexityBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.complexityBtn.active {
+  background-color: var(--accent);
+  color: black;
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.reqList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+}
+
+.reqItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  cursor: pointer;
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+}
+
+.reqItem:hover {
+  color: var(--primary);
+}
+
+/* Monitor Panel Styles */
+.monitorPanel {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: sticky;
+  top: var(--spacing-4);
+}
+
+.monitorHeader {
+  background-color: var(--primary);
+  color: black;
+  padding: var(--spacing-3);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.monitorBody {
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.monitorRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-family-monospace);
+  font-size: 0.9rem;
+}
+
+.monitorLabel {
+  color: var(--muted);
+}
+
+.monitorValue {
+  font-weight: 700;
+}
+
+.highlight {
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+.monitorDivider {
+  height: 1px;
+  background-color: var(--border);
+  margin: var(--spacing-2) 0;
+}
+
+.monitorTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-2);
+}
+
+.totalLabel {
+  font-family: var(--font-family-heading);
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.totalValue {
+  font-family: var(--font-family-monospace);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.monitorVisual {
+  height: 8px;
+  background-color: var(--surface);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: var(--spacing-2);
+}
+
+.loadBar {
+  height: 100%;
+  background-color: var(--accent);
+  transition: width 0.5s ease;
+}
+
+.monitorFooter {
+  padding: var(--spacing-4);
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.submitBtn {
+  width: 100%;
+  background-color: var(--secondary) !important;
+  color: black !important;
+  font-weight: 700 !important;
+}
+
+.disclaimer {
+  font-family: var(--font-family-monospace);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-align: center;
+  opacity: 0.7;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .monitorPanel {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+  }
+  
+  .checkboxGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .reqList {
+    grid-template-columns: 1fr;
+  }
+}

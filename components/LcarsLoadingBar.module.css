@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  width: 100%;
+  --bar-color: var(--primary);
+  --bar-height: 1rem;
+  --segment-gap: 2px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-family-heading);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--bar-color);
+  padding-right: var(--spacing-1);
+}
+
+.label {
+  letter-spacing: 0.05em;
+}
+
+.percentage {
+  font-family: var(--font-family-monospace);
+}
+
+.track {
+  display: flex;
+  height: var(--bar-height);
+  gap: var(--segment-gap);
+  position: relative;
+  overflow: hidden;
+  /* The track itself can have a pill shape or just the segments */
+}
+
+/* Determinate Segments */
+.segment {
+  flex: 1;
+  height: 100%;
+  background-color: var(--bar-color);
+  opacity: 0.2;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.segment:first-child {
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+.segment:last-child {
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
+
+.filled {
+  opacity: 1;
+  box-shadow: 0 0 8px var(--bar-color);
+}
+
+/* Indeterminate Animation */
+.indeterminateBar {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+
+.scanner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 30%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--bar-color),
+    transparent
+  );
+  animation: scan 1.5s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+@keyframes scan {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Sizes */
+.sm {
+  --bar-height: 0.5rem;
+  font-size: 0.7rem;
+}
+
+.md {
+  --bar-height: 1rem;
+  font-size: 0.85rem;
+}
+
+.lg {
+  --bar-height: 1.5rem;
+  font-size: 1rem;
+}
+
+/* Color Variants */
+.primary { --bar-color: var(--primary); }
+.secondary { --bar-color: var(--secondary); }
+.accent { --bar-color: var(--accent); }
+.muted { --bar-color: var(--muted); }
+.info { --bar-color: var(--info); }
+.success { --bar-color: var(--success); }
+.warning { --bar-color: var(--warning); }
+.error { --bar-color: var(--error); }
