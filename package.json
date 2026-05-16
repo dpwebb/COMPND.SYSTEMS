@@ -6,7 +6,9 @@
     "build": "vite build",
     "start": "tsx server.ts",
     "preview": "vite preview --host 0.0.0.0",
-    "smoke:test": "node scripts/smoke-test.mjs"
+    "smoke:test": "node scripts/smoke-test.mjs",
+    "smoke:prod": "node scripts/smoke-test.mjs --frontend=http://127.0.0.1:3336 --backend=http://127.0.0.1:3336",
+    "verify": "pnpm run build && pnpm audit --audit-level high"
   },
   "dependencies": {
     "openai": "6.15.0",

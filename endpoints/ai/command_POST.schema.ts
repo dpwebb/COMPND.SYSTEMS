@@ -1,13 +1,17 @@
 import { z } from "zod";
 
+export const MAX_COMMAND_LENGTH = 2000;
+export const MAX_HISTORY_MESSAGES = 10;
+export const MAX_HISTORY_MESSAGE_LENGTH = 2000;
+
 export const messageSchema = z.object({
   role: z.enum(["user", "assistant"]),
-  content: z.string(),
+  content: z.string().max(MAX_HISTORY_MESSAGE_LENGTH, "History message is too long"),
 });
 
 export const schema = z.object({
-  command: z.string().min(1, "Command cannot be empty"),
-  history: z.array(messageSchema).optional(),
+  command: z.string().min(1, "Command cannot be empty").max(MAX_COMMAND_LENGTH, "Command is too long"),
+  history: z.array(messageSchema).max(MAX_HISTORY_MESSAGES, "History contains too many messages").optional(),
 });
 
 export type InputType = z.infer<typeof schema>;

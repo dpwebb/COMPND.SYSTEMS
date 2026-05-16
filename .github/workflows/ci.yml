@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.2
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Audit high severity dependencies
+        run: pnpm audit --audit-level high
+
+      - name: Start production-mode server
+        run: pnpm start > compnd-api.log 2>&1 &
+        env:
+          NODE_ENV: production
+          COMPND_API_PORT: 3336
+          COMPND_ENABLE_ADMIN_AUTONOMY: "false"
+
+      - name: Wait for health
+        run: node scripts/wait-for-url.mjs http://127.0.0.1:3336/_api/health 30000
+
+      - name: Smoke test
+        run: pnpm smoke:prod
+        env:
+          COMPND_SMOKE_TIMEOUT_MS: 10000

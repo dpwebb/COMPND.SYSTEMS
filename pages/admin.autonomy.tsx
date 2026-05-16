@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Activity, Bot, Play, RefreshCw, ShieldCheck, ShieldX, Terminal } from "lucide-react";
+import { Activity, Bot, FileText, Play, RefreshCw, ShieldCheck, ShieldX, Terminal } from "lucide-react";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { LcarsPanel } from "../components/LcarsPanel";
@@ -54,6 +54,17 @@ type AutonomyStatus = {
       content?: string;
     };
   }>;
+  reports?: {
+    count: number;
+    indexPath: string;
+    indexMarkdownPath: string;
+    nextBestChangesPath: string;
+    futureBuildPlanPath?: string;
+    latestRunId: string;
+    latestReportPath: string;
+    handoffRunId: string;
+    error?: string;
+  };
 };
 
 type StartRunResult = {
@@ -71,15 +82,11 @@ type StartRunResult = {
 
 const DEFAULT_PROMPT =
   "Inspect COMPND.SYSTEMS and implement the next highest-leverage improvement. Preserve existing behavior, avoid secrets and deployment config, run relevant checks, and document the work under docs/agent/runs.";
-const ADMIN_TOKEN_STORAGE_KEY = "compnd.admin.autonomy.token";
 
-async function apiJson<T>(url: string, init?: RequestInit, adminToken = ""): Promise<T> {
+async function apiJson<T>(url: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers || {});
   if (!headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
-  }
-  if (adminToken.trim()) {
-    headers.set("x-compnd-admin-token", adminToken.trim());
   }
 
   const response = await fetch(url, {
@@ -114,31 +121,17 @@ export default function AdminAutonomyPage() {
   const [isStarting, setIsStarting] = useState(false);
   const [startError, setStartError] = useState("");
   const [startResult, setStartResult] = useState<StartRunResult | null>(null);
-  const [adminToken, setAdminToken] = useState("");
 
   useEffect(() => {
     void refreshStatus();
   }, []);
 
   useEffect(() => {
-    try {
-      setAdminToken(localStorage.getItem(ADMIN_TOKEN_STORAGE_KEY) || "");
-    } catch {
-      setAdminToken("");
-    }
+    const interval = window.setInterval(() => {
+      void refreshStatus();
+    }, 30000);
+    return () => window.clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    try {
-      if (adminToken.trim()) {
-        localStorage.setItem(ADMIN_TOKEN_STORAGE_KEY, adminToken.trim());
-      } else {
-        localStorage.removeItem(ADMIN_TOKEN_STORAGE_KEY);
-      }
-    } catch {
-      // Ignore storage errors in restricted browser modes.
-    }
-  }, [adminToken]);
 
   const controlsOpen = Boolean(status?.controls.canStart);
   const runnerOnline = Boolean(status?.runner.ok);
@@ -149,7 +142,7 @@ export default function AdminAutonomyPage() {
     setIsLoadingStatus(true);
     setStatusError("");
     try {
-      const nextStatus = await apiJson<AutonomyStatus>("/_api/admin/autonomy/status", undefined, adminToken);
+      const nextStatus = await apiJson<AutonomyStatus>("/_api/admin/autonomy/status");
       setStatus(nextStatus);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -172,7 +165,7 @@ export default function AdminAutonomyPage() {
           runId,
           model,
         }),
-      }, adminToken);
+      });
       setStartResult(result);
       setRunId("");
       await refreshStatus();
@@ -230,6 +223,12 @@ export default function AdminAutonomyPage() {
               value={status?.controls.killSwitch.active ? "active" : "inactive"}
               ok={!status?.controls.killSwitch.active}
             />
+            <StatusItem
+              icon={<FileText size={18} />}
+              label="Reports"
+              value={status?.reports?.error ? "error" : `${status?.reports?.count || 0} tracked`}
+              ok={Boolean(status?.reports && !status.reports.error)}
+            />
           </div>
           {status && (
             <div className={styles.metaBlock}>
@@ -238,20 +237,20 @@ export default function AdminAutonomyPage() {
               <p>Backend: {status.project.backendUrl}</p>
               <p>Auth Mode: {status.adminAuthMode}</p>
               <p>Remote Access: {status.adminRemoteAllowed ? "enabled" : "loopback only"}</p>
+              {status.reports && (
+                <>
+                  <p>Report Index: {status.reports.indexMarkdownPath}</p>
+                  <p>Next Best Changes: {status.reports.nextBestChangesPath}</p>
+                  <p>Future Build Plan: {status.reports.futureBuildPlanPath || "pending"}</p>
+                  <p>Latest Report: {status.reports.latestReportPath || "pending"}</p>
+                  <p>Handoff Source: {status.reports.handoffRunId || "pending"}</p>
+                </>
+              )}
             </div>
           )}
+          {status?.reports?.error && <div className={styles.errorBox}>Report sync error: {status.reports.error}</div>}
           {statusError && <div className={styles.errorBox}>{statusError}</div>}
           <div className={styles.actionRow}>
-            <label className={styles.inlineField}>
-              <span>Admin Token</span>
-              <Input
-                value={adminToken}
-                onChange={(event) => setAdminToken(event.target.value)}
-                type="password"
-                className={styles.tokenInput}
-                placeholder="Required only in token mode"
-              />
-            </label>
             <Button variant="ghost" onClick={() => refreshStatus()} disabled={isLoadingStatus}>
               <RefreshCw size={16} className={isLoadingStatus ? styles.spin : ""} />
               Refresh

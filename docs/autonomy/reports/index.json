@@ -1,0 +1,40 @@
+{
+  "project": {
+    "key": "compnd",
+    "name": "COMPND.SYSTEMS",
+    "workspace": "."
+  },
+  "reports": [
+    {
+      "runId": "COMPND-20260516161459",
+      "status": "codex_completed",
+      "updatedAt": 1778960051,
+      "updatedAtIso": "2026-05-16T19:34:11.000Z",
+      "latestEventType": "codex_completed",
+      "latestEventSummary": "**Built** - Added backend health route in [server.ts](C:/Users/webbd/Projects/COMPND.SYSTEMS/server.ts) at `GET /_api/health` returning `status`, `service`, and `timestamp`. - Added a smoke runner at [scripts/smoke-test.mjs](C:/Users/webbd/Projects/COMPND.SYSTEMS/scripts/smoke-test.mjs) that checks: 1. frontend root HTML availability 2. backend liveness (`/_\n\n[truncated]",
+      "eventCount": 173,
+      "completed": true,
+      "hasNextActions": true,
+      "reportPath": "docs/autonomy/reports/COMPND-20260516161459.md",
+      "runPath": "docs/agent/runs/COMPND-20260516161459",
+      "nextActionsPath": "docs/agent/runs/COMPND-20260516161459/next-actions.md"
+    },
+    {
+      "runId": "COMPND-20260516161847",
+      "status": "codex_completed",
+      "updatedAt": 1778959574,
+      "updatedAtIso": "2026-05-16T19:26:14.000Z",
+      "latestEventType": "codex_completed",
+      "latestEventSummary": "Implemented a security/reliability hardening pass for the autonomy admin surface. **What I built** - Added loopback-only protection for admin autonomy API access by default, with explicit override via `COMPND_ADMIN_ALLOW_REMOTE=true` in [compndAutonomyBridge.ts](C:/Users/webbd/Projects/COMPND.SYSTEMS/helpers/compndAutonomyBridge.ts:144). - Added bounded time\n\n[truncated]",
+      "eventCount": 193,
+      "completed": true,
+      "hasNextActions": true,
+      "reportPath": "docs/autonomy/reports/COMPND-20260516161847.md",
+      "runPath": "docs/agent/runs/COMPND-20260516161847",
+      "nextActionsPath": "docs/agent/runs/COMPND-20260516161847/next-actions.md"
+    }
+  ],
+  "nextBestChangesPath": "docs/autonomy/NEXT_CHANGES.md",
+  "reportIndexMarkdownPath": "docs/autonomy/reports/index.md",
+  "futureBuildPlanPath": "FUTURE_BUILD_PLAN.md"
+}

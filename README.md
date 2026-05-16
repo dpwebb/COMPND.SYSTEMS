@@ -30,3 +30,16 @@ pnpm install
 pnpm vite build
 pnpm tsx server.ts
 ```
+
+## Production Readiness
+
+This project is not yet approved for public production at scale. Use [docs/production-readiness.md](docs/production-readiness.md) as the current release gate checklist.
+
+Minimum validation before promotion:
+
+```
+pnpm install --frozen-lockfile
+pnpm run build
+pnpm audit --audit-level high
+pnpm smoke:prod
+```
