@@ -1,9 +1,11 @@
 import "./loadEnv.js";
+import { randomUUID } from "node:crypto";
 import { Hono } from 'hono'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { serve } from '@hono/node-server';
 
 const app = new Hono();
+const SERVICE_NAME = "COMPND.SYSTEMS";
 const AI_RATE_LIMIT_WINDOW_MS = getBoundedNumber(process.env.COMPND_AI_RATE_LIMIT_WINDOW_MS, 60000, 1000, 3600000);
 const AI_RATE_LIMIT_MAX = getBoundedNumber(process.env.COMPND_AI_RATE_LIMIT_MAX, 20, 1, 1000);
 const aiRateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
@@ -32,6 +34,45 @@ function isAdminAutonomyEnabled() {
   return !["0", "false", "off", "disabled"].includes(String(process.env.COMPND_ENABLE_ADMIN_AUTONOMY || "").trim().toLowerCase());
 }
 
+function getAdminAuthModeSetting() {
+  return String(
+    process.env.COMPND_ADMIN_AUTH_MODE ||
+      process.env.CODEX_ADMIN_AUTH_MODE ||
+      process.env.ADMIN_AUTH_MODE ||
+      ""
+  ).trim().toLowerCase();
+}
+
+function hasConfiguredAdminToken() {
+  const token = String(
+    process.env.COMPND_ADMIN_ACCESS_TOKEN ||
+      process.env.CODEX_ADMIN_ACCESS_TOKEN ||
+      process.env.ADMIN_ACCESS_TOKEN ||
+      ""
+  ).trim();
+  return token.length >= 32;
+}
+
+function getAdminAutonomyBlock() {
+  if (!isAdminAutonomyEnabled()) {
+    return { status: 403, message: "Admin autonomy endpoints are disabled in this runtime." };
+  }
+
+  if (!isProductionRuntime()) {
+    return null;
+  }
+
+  if (!["token", "required", "strict"].includes(getAdminAuthModeSetting())) {
+    return { status: 503, message: "Admin autonomy requires token auth in production." };
+  }
+
+  if (!hasConfiguredAdminToken()) {
+    return { status: 503, message: "Admin autonomy token is not configured for production." };
+  }
+
+  return null;
+}
+
 function firstCsvValue(value: string) {
   return value.split(",")[0]?.trim() || "";
 }
@@ -57,6 +98,49 @@ function consumeRateLimit(key: string) {
   existing.count += 1;
   return { allowed: true, remaining: AI_RATE_LIMIT_MAX - existing.count, resetAt: existing.resetAt };
 }
+
+function writeLog(level: "info" | "warn" | "error", event: string, details: Record<string, unknown> = {}) {
+  const record = {
+    timestamp: new Date().toISOString(),
+    level,
+    event,
+    service: SERVICE_NAME,
+    ...details,
+  };
+  const line = JSON.stringify(record);
+  if (level === "error") {
+    console.error(line);
+  } else if (level === "warn") {
+    console.warn(line);
+  } else {
+    console.log(line);
+  }
+}
+
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+app.use("*", async (c, next) => {
+  const requestId = c.req.header("x-request-id") || randomUUID();
+  const startedAt = Date.now();
+  c.header("X-Request-ID", requestId);
+
+  try {
+    await next();
+  } finally {
+    const path = c.req.path;
+    if (!path.startsWith("/_assets")) {
+      writeLog("info", "http_request", {
+        requestId,
+        method: c.req.method,
+        path,
+        status: c.res.status,
+        durationMs: Date.now() - startedAt,
+      });
+    }
+  }
+});
 
 app.use("*", async (c, next) => {
   c.header("X-Content-Type-Options", "nosniff");
@@ -88,8 +172,22 @@ app.use("/_api/ai/*", async (c, next) => {
 app.get("/_api/health", (c) => {
   return c.json({
     status: "ok",
-    service: "COMPND.SYSTEMS",
+    service: SERVICE_NAME,
     timestamp: new Date().toISOString(),
+  });
+});
+
+app.get("/_api/ready", (c) => {
+  return c.json({
+    status: "ready",
+    service: SERVICE_NAME,
+    timestamp: new Date().toISOString(),
+    runtime: isProductionRuntime() ? "production" : "development",
+    adminAutonomyEnabled: isAdminAutonomyEnabled(),
+    aiRateLimit: {
+      windowMs: AI_RATE_LIMIT_WINDOW_MS,
+      max: AI_RATE_LIMIT_MAX,
+    },
   });
 });
 
@@ -103,14 +201,15 @@ app.post('_api/ai/command',async c => {
     }
     return response;
   } catch (e) {
-    console.error(e);
-    return c.text("Error loading endpoint code " + e.message,  500)
+    writeLog("error", "endpoint_load_error", { path: c.req.path, message: getErrorMessage(e) });
+    return c.text("Error loading endpoint code " + getErrorMessage(e),  500)
   }
 })
 app.get('_api/admin/autonomy/status',async c => {
   try {
-    if (!isAdminAutonomyEnabled()) {
-      return c.json({ error: "Admin autonomy endpoints are disabled in this runtime." }, 403);
+    const block = getAdminAutonomyBlock();
+    if (block) {
+      return c.json({ error: block.message }, block.status);
     }
     const { handle } = await import("./endpoints/admin/autonomy/status_GET.js");
     let request = c.req.raw;
@@ -120,15 +219,16 @@ app.get('_api/admin/autonomy/status',async c => {
     }
     return response;
   } catch (e) {
-    console.error(e);
-    const message = e instanceof Error ? e.message : String(e);
+    const message = getErrorMessage(e);
+    writeLog("error", "endpoint_load_error", { path: c.req.path, message });
     return c.text("Error loading endpoint code " + message, 500)
   }
 })
 app.post('_api/admin/autonomy/start_run',async c => {
   try {
-    if (!isAdminAutonomyEnabled()) {
-      return c.json({ error: "Admin autonomy endpoints are disabled in this runtime." }, 403);
+    const block = getAdminAutonomyBlock();
+    if (block) {
+      return c.json({ error: block.message }, block.status);
     }
     const { handle } = await import("./endpoints/admin/autonomy/start_run_POST.js");
     let request = c.req.raw;
@@ -138,8 +238,8 @@ app.post('_api/admin/autonomy/start_run',async c => {
     }
     return response;
   } catch (e) {
-    console.error(e);
-    const message = e instanceof Error ? e.message : String(e);
+    const message = getErrorMessage(e);
+    writeLog("error", "endpoint_load_error", { path: c.req.path, message });
     return c.text("Error loading endpoint code " + message, 500)
   }
 })
@@ -153,5 +253,15 @@ app.get("*", async (c, next) => {
   return serveStatic({ path: "./dist/index.html" })(c, next);
 });
 const port = Number(process.env.COMPND_API_PORT || 3336);
-serve({ fetch: app.fetch, port });
-console.log(`Running at http://localhost:${port}`)
+const server = serve({ fetch: app.fetch, port });
+writeLog("info", "server_started", { port });
+
+function shutdown(signal: string) {
+  writeLog("info", "server_shutdown", { signal });
+  server.close(() => {
+    process.exit(0);
+  });
+}
+
+process.on("SIGINT", () => shutdown("SIGINT"));
+process.on("SIGTERM", () => shutdown("SIGTERM"));

@@ -1,0 +1,14 @@
+node_modules
+dist
+.vite
+.git
+.github
+
+env.json
+.env
+.env.*
+*.log
+
+docs/agent/runs
+docs/agent/control
+docs/autonomy/reports

@@ -43,3 +43,10 @@ pnpm run build
 pnpm audit --audit-level high
 pnpm smoke:prod
 ```
+
+Container build:
+
+```
+docker build -t compnd-systems:local .
+docker run --rm -p 3336:3336 -e NODE_ENV=production -e COMPND_ENABLE_ADMIN_AUTONOMY=false compnd-systems:local
+```

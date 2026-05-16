@@ -83,6 +83,31 @@ async function requireBackendReachable(baseUrl, timeoutMs) {
   };
 }
 
+async function requireBackendReady(baseUrl, timeoutMs) {
+  const readyUrl = getUrl(baseUrl, "/_api/ready");
+  const response = await fetchWithTimeout(readyUrl, timeoutMs);
+  const text = await response.text();
+  let body = null;
+  try {
+    body = text ? JSON.parse(text) : null;
+  } catch {
+    body = null;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Readiness endpoint failed at ${readyUrl} with status ${response.status}`);
+  }
+  if (!body || body.status !== "ready") {
+    throw new Error(`Readiness endpoint returned unexpected payload at ${readyUrl}`);
+  }
+
+  return {
+    status: response.status,
+    runtime: body.runtime || "unknown",
+    adminAutonomyEnabled: Boolean(body.adminAutonomyEnabled),
+  };
+}
+
 async function requireAdminStatusReachable(url, timeoutMs) {
   const response = await fetchWithTimeout(url, timeoutMs);
   const text = await response.text();
@@ -136,6 +161,13 @@ async function main() {
       run: async () => {
         const result = await requireBackendReachable(backendUrl, timeoutMs);
         return `status=${result.status} mode=${result.mode} service=${result.service}`;
+      },
+    },
+    {
+      label: "backend-ready",
+      run: async () => {
+        const result = await requireBackendReady(backendUrl, timeoutMs);
+        return `status=${result.status} runtime=${result.runtime} adminAutonomyEnabled=${result.adminAutonomyEnabled}`;
       },
     },
     {

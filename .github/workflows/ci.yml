@@ -49,3 +49,6 @@ jobs:
         run: pnpm smoke:prod
         env:
           COMPND_SMOKE_TIMEOUT_MS: 10000
+
+      - name: Docker build
+        run: docker build -t compnd-systems:ci .
