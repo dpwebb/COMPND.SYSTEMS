@@ -34,10 +34,7 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--spacing-6);
+.statusSection {
   margin-bottom: var(--spacing-6);
 }
 
@@ -50,7 +47,6 @@
   margin-bottom: var(--spacing-6);
 }
 
-.authBox,
 .startGrid,
 .statusGrid,
 .runList {
@@ -87,20 +83,25 @@
   font-family: var(--font-family-monospace);
 }
 
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  margin: var(--spacing-4) 0;
-  color: var(--muted);
-  font-family: var(--font-family-monospace);
-}
-
 .actionRow {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
   flex-wrap: wrap;
+}
+
+.inlineField {
+  display: grid;
+  gap: var(--spacing-1);
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tokenInput {
+  width: min(420px, 78vw);
 }
 
 .statusItem {
@@ -207,7 +208,6 @@
 }
 
 @media (max-width: 900px) {
-  .grid,
   .startGrid,
   .statusGrid {
     grid-template-columns: 1fr;

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Activity, Bot, Lock, Play, RefreshCw, ShieldCheck, ShieldX, Terminal } from "lucide-react";
+import { Activity, Bot, Play, RefreshCw, ShieldCheck, ShieldX, Terminal } from "lucide-react";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { LcarsPanel } from "../components/LcarsPanel";
@@ -13,7 +13,9 @@ type ApiState<T> =
 
 type AutonomyStatus = {
   timestamp: string;
+  adminAuthMode: "tokenless" | "token";
   adminConfigured: boolean;
+  adminRemoteAllowed: boolean;
   project: {
     key: string;
     name: string;
@@ -67,18 +69,22 @@ type StartRunResult = {
   stderr?: string;
 };
 
-const TOKEN_STORAGE_KEY = "compnd.admin.autonomy.token";
 const DEFAULT_PROMPT =
   "Inspect COMPND.SYSTEMS and implement the next highest-leverage improvement. Preserve existing behavior, avoid secrets and deployment config, run relevant checks, and document the work under docs/agent/runs.";
+const ADMIN_TOKEN_STORAGE_KEY = "compnd.admin.autonomy.token";
 
-async function apiJson<T>(url: string, token: string, init?: RequestInit): Promise<T> {
+async function apiJson<T>(url: string, init?: RequestInit, adminToken = ""): Promise<T> {
+  const headers = new Headers(init?.headers || {});
+  if (!headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+  if (adminToken.trim()) {
+    headers.set("x-compnd-admin-token", adminToken.trim());
+  }
+
   const response = await fetch(url, {
     ...init,
-    headers: {
-      ...(init?.headers || {}),
-      "Content-Type": "application/json",
-      "x-compnd-admin-token": token,
-    },
+    headers,
   });
   const text = await response.text();
   const body = text ? JSON.parse(text) : null;
@@ -99,65 +105,59 @@ function statusLabel(state: ApiState<any>, fallback = "offline") {
 }
 
 export default function AdminAutonomyPage() {
-  const [token, setToken] = useState("");
-  const [savedToken, setSavedToken] = useState("");
   const [status, setStatus] = useState<AutonomyStatus | null>(null);
   const [statusError, setStatusError] = useState("");
   const [isLoadingStatus, setIsLoadingStatus] = useState(false);
   const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
   const [runId, setRunId] = useState("");
   const [model, setModel] = useState("gpt-5.3-codex");
-  const [launchCodex, setLaunchCodex] = useState(true);
   const [isStarting, setIsStarting] = useState(false);
   const [startError, setStartError] = useState("");
   const [startResult, setStartResult] = useState<StartRunResult | null>(null);
+  const [adminToken, setAdminToken] = useState("");
 
   useEffect(() => {
-    const existing = window.localStorage.getItem(TOKEN_STORAGE_KEY) || "";
-    setToken(existing);
-    setSavedToken(existing);
+    void refreshStatus();
   }, []);
 
-  const isAuthenticated = Boolean(savedToken);
+  useEffect(() => {
+    try {
+      setAdminToken(localStorage.getItem(ADMIN_TOKEN_STORAGE_KEY) || "");
+    } catch {
+      setAdminToken("");
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      if (adminToken.trim()) {
+        localStorage.setItem(ADMIN_TOKEN_STORAGE_KEY, adminToken.trim());
+      } else {
+        localStorage.removeItem(ADMIN_TOKEN_STORAGE_KEY);
+      }
+    } catch {
+      // Ignore storage errors in restricted browser modes.
+    }
+  }, [adminToken]);
+
   const controlsOpen = Boolean(status?.controls.canStart);
   const runnerOnline = Boolean(status?.runner.ok);
   const launcherOnline = Boolean(status?.hostLauncher.ok);
-  const canStart = isAuthenticated && controlsOpen && runnerOnline && launcherOnline && !isStarting;
+  const canStart = Boolean(prompt.trim()) && !isStarting;
 
-  async function refreshStatus(nextToken = savedToken) {
-    if (!nextToken) {
-      setStatusError("Admin token required.");
-      return;
-    }
+  async function refreshStatus() {
     setIsLoadingStatus(true);
     setStatusError("");
     try {
-      setStatus(await apiJson<AutonomyStatus>("/_api/admin/autonomy/status", nextToken));
+      const nextStatus = await apiJson<AutonomyStatus>("/_api/admin/autonomy/status", undefined, adminToken);
+      setStatus(nextStatus);
     } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
       setStatus(null);
-      setStatusError(error instanceof Error ? error.message : String(error));
+      setStatusError(message);
     } finally {
       setIsLoadingStatus(false);
     }
-  }
-
-  function saveToken() {
-    const next = token.trim();
-    if (next) {
-      window.localStorage.setItem(TOKEN_STORAGE_KEY, next);
-    } else {
-      window.localStorage.removeItem(TOKEN_STORAGE_KEY);
-    }
-    setSavedToken(next);
-    void refreshStatus(next);
-  }
-
-  function clearToken() {
-    window.localStorage.removeItem(TOKEN_STORAGE_KEY);
-    setToken("");
-    setSavedToken("");
-    setStatus(null);
-    setStatusError("Admin token cleared.");
   }
 
   async function startRun() {
@@ -165,15 +165,14 @@ export default function AdminAutonomyPage() {
     setStartError("");
     setStartResult(null);
     try {
-      const result = await apiJson<StartRunResult>("/_api/admin/autonomy/start_run", savedToken, {
+      const result = await apiJson<StartRunResult>("/_api/admin/autonomy/start_run", {
         method: "POST",
         body: JSON.stringify({
           prompt,
           runId,
           model,
-          launchCodex,
         }),
-      });
+      }, adminToken);
       setStartResult(result);
       setRunId("");
       await refreshStatus();
@@ -199,46 +198,12 @@ export default function AdminAutonomyPage() {
           <h1 className={styles.title}>AUTONOMY ACCESS</h1>
         </div>
         <div className={styles.headerPill}>
-          <Lock size={16} />
-          TOKEN GATED
+          <ShieldCheck size={16} />
+          TEST ACCESS AUTO
         </div>
       </div>
 
-      <section className={styles.grid}>
-        <LcarsPanel
-          title="ADMIN AUTHORIZATION"
-          color={isAuthenticated ? "secondary" : "accent"}
-          className={styles.panel}
-        >
-          <div className={styles.authBox}>
-            <label className={styles.field}>
-              <span>Admin Token</span>
-              <Input
-                type="password"
-                value={token}
-                onChange={(event) => setToken(event.target.value)}
-                placeholder="COMPND_ADMIN_ACCESS_TOKEN"
-                autoComplete="current-password"
-              />
-            </label>
-            <div className={styles.actionRow}>
-              <Button onClick={saveToken}>
-                <ShieldCheck size={16} />
-                Authorize
-              </Button>
-              <Button variant="outline" onClick={clearToken}>
-                <ShieldX size={16} />
-                Clear
-              </Button>
-              <Button variant="ghost" onClick={() => refreshStatus()} disabled={!savedToken || isLoadingStatus}>
-                <RefreshCw size={16} className={isLoadingStatus ? styles.spin : ""} />
-                Refresh
-              </Button>
-            </div>
-          </div>
-          {statusError && <div className={styles.errorBox}>{statusError}</div>}
-        </LcarsPanel>
-
+      <section className={styles.statusSection}>
         <LcarsPanel title="SYSTEM STATUS" color="info" className={styles.panel}>
           <div className={styles.statusGrid}>
             <StatusItem
@@ -271,8 +236,27 @@ export default function AdminAutonomyPage() {
               <p>Workspace: {status.project.workspace}</p>
               <p>Frontend: {status.project.frontendUrl}</p>
               <p>Backend: {status.project.backendUrl}</p>
+              <p>Auth Mode: {status.adminAuthMode}</p>
+              <p>Remote Access: {status.adminRemoteAllowed ? "enabled" : "loopback only"}</p>
             </div>
           )}
+          {statusError && <div className={styles.errorBox}>{statusError}</div>}
+          <div className={styles.actionRow}>
+            <label className={styles.inlineField}>
+              <span>Admin Token</span>
+              <Input
+                value={adminToken}
+                onChange={(event) => setAdminToken(event.target.value)}
+                type="password"
+                className={styles.tokenInput}
+                placeholder="Required only in token mode"
+              />
+            </label>
+            <Button variant="ghost" onClick={() => refreshStatus()} disabled={isLoadingStatus}>
+              <RefreshCw size={16} className={isLoadingStatus ? styles.spin : ""} />
+              Refresh
+            </Button>
+          </div>
         </LcarsPanel>
       </section>
 
@@ -307,22 +291,13 @@ export default function AdminAutonomyPage() {
           />
         </label>
 
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            checked={launchCodex}
-            onChange={(event) => setLaunchCodex(event.target.checked)}
-          />
-          Launch Codex immediately after creating the run.
-        </label>
-
         <div className={styles.actionRow}>
           <Button onClick={startRun} disabled={!canStart}>
             <Play size={16} />
             {isStarting ? "Starting..." : "Start Autonomy Run"}
           </Button>
-          {!controlsOpen && status && (
-            <span className={styles.blockedText}>Controls blocked. Check lease and kill-switch state.</span>
+          {(!controlsOpen || !runnerOnline || !launcherOnline) && status && (
+            <span className={styles.blockedText}>System readiness warning. The backend will report any runner, lease, or kill-switch block.</span>
           )}
         </div>
 

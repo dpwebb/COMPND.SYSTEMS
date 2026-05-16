@@ -20,7 +20,6 @@ export async function handle(request: Request) {
         prompt: String(body?.prompt || ""),
         runId: body?.runId ? String(body.runId) : "",
         model: body?.model ? String(body.model) : "",
-        launchCodex: body?.launchCodex !== false,
       }),
       202
     );

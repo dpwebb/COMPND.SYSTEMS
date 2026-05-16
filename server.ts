@@ -5,6 +5,14 @@ import { serve } from '@hono/node-server';
 
 const app = new Hono();
 
+app.get("/_api/health", (c) => {
+  return c.json({
+    status: "ok",
+    service: "COMPND.SYSTEMS",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.post('_api/ai/command',async c => {
   try {
     const { handle } = await import("./endpoints/ai/command_POST.js");
@@ -58,6 +66,6 @@ app.get("*", async (c, next) => {
   }
   return serveStatic({ path: "./dist/index.html" })(c, next);
 });
-const port = Number(process.env.PORT || 3336);
+const port = Number(process.env.COMPND_API_PORT || 3336);
 serve({ fetch: app.fetch, port });
 console.log(`Running at http://localhost:${port}`)

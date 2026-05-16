@@ -27,8 +27,13 @@ const KILL_SWITCH_PATH = path.join(CONTROL_DIR, "kill-switch.json");
 const AUTHORIZATION_LEASE_PATH = path.join(CONTROL_DIR, "authorization-lease.json");
 const START_SCRIPT_PATH = path.join(AUTONOMY_ROOT, "Start-CodexProjectAutonomy.ps1");
 const REGISTRY_PATH = "C:\\Users\\webbd\\Projects\\codex-projects.json";
+const LOOPBACK_HOSTS = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
+const DEFAULT_STATUS_TIMEOUT_MS = 5000;
+const MAX_STATUS_TIMEOUT_MS = 30000;
+const MIN_STATUS_TIMEOUT_MS = 1000;
 
 const MODEL_ALLOWLIST = new Set(["", "gpt-5.5", "gpt-5.3-codex", "gpt-5.3-codex-spark"]);
+type AdminAuthMode = "tokenless" | "token";
 
 export class AutonomyHttpError extends Error {
   status: number;
@@ -53,6 +58,43 @@ function getConfiguredAdminToken() {
   ).trim();
 }
 
+function isTruthy(value: string) {
+  return ["1", "true", "yes", "on", "allow"].includes(value.trim().toLowerCase());
+}
+
+function isRemoteAdminAllowed() {
+  return isTruthy(
+    process.env.COMPND_ADMIN_ALLOW_REMOTE ||
+      process.env.CODEX_ADMIN_ALLOW_REMOTE ||
+      process.env.ADMIN_ALLOW_REMOTE ||
+      ""
+  );
+}
+
+function getStatusFetchTimeoutMs() {
+  const rawValue = process.env.COMPND_AUTONOMY_STATUS_TIMEOUT_MS || "";
+  const parsed = Number(rawValue);
+  if (!Number.isFinite(parsed)) {
+    return DEFAULT_STATUS_TIMEOUT_MS;
+  }
+  return Math.max(MIN_STATUS_TIMEOUT_MS, Math.min(MAX_STATUS_TIMEOUT_MS, Math.floor(parsed)));
+}
+
+function getAdminAuthMode(): AdminAuthMode {
+  const rawMode = (
+    process.env.COMPND_ADMIN_AUTH_MODE ||
+    process.env.CODEX_ADMIN_AUTH_MODE ||
+    process.env.ADMIN_AUTH_MODE ||
+    ""
+  ).trim().toLowerCase();
+
+  if (["token", "required", "strict"].includes(rawMode)) {
+    return "token";
+  }
+
+  return "tokenless";
+}
+
 function getRequestAdminToken(request: Request) {
   const headerToken = request.headers.get("x-compnd-admin-token") || "";
   const authorization = request.headers.get("authorization") || "";
@@ -66,7 +108,68 @@ function safeTokenEquals(left: string, right: string) {
   return leftBuffer.length === rightBuffer.length && timingSafeEqual(leftBuffer, rightBuffer);
 }
 
+function normalizeAddress(value: string) {
+  const trimmed = value.trim();
+  const bracketedIpv6 = trimmed.match(/^\[([^\]]+)\](?::\d+)?$/)?.[1];
+  if (bracketedIpv6) {
+    return bracketedIpv6.toLowerCase();
+  }
+  if (/^\d{1,3}(?:\.\d{1,3}){3}:\d+$/.test(trimmed)) {
+    return trimmed.split(":")[0].toLowerCase();
+  }
+  return trimmed.toLowerCase();
+}
+
+function isLoopbackAddress(value: string) {
+  const normalized = normalizeAddress(value);
+  if (!normalized) return false;
+  if (LOOPBACK_HOSTS.has(normalized)) return true;
+  if (normalized.startsWith("127.")) return true;
+  if (normalized.startsWith("::ffff:127.")) return true;
+  return false;
+}
+
+function firstCsvValue(value: string) {
+  return value.split(",")[0]?.trim() || "";
+}
+
+function getRequestHostname(request: Request) {
+  try {
+    return new URL(request.url).hostname.toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+function assertCompndAutonomyLoopbackAccess(request: Request) {
+  if (isRemoteAdminAllowed()) {
+    return;
+  }
+
+  const hostname = getRequestHostname(request);
+  const forwardedFor = firstCsvValue(request.headers.get("x-forwarded-for") || "");
+  const realIp = request.headers.get("x-real-ip") || "";
+
+  const hostAllowed = Boolean(hostname) && isLoopbackAddress(hostname);
+  const forwardedAllowed = !forwardedFor || isLoopbackAddress(forwardedFor);
+  const realIpAllowed = !realIp || isLoopbackAddress(realIp);
+
+  if (!hostAllowed || !forwardedAllowed || !realIpAllowed) {
+    throw new AutonomyHttpError(
+      403,
+      "Admin autonomy endpoints only accept loopback requests by default. Set COMPND_ADMIN_ALLOW_REMOTE=true to allow remote access."
+    );
+  }
+}
+
 export function assertCompndAutonomyAdmin(request: Request) {
+  assertCompndAutonomyLoopbackAccess(request);
+
+  const authMode = getAdminAuthMode();
+  if (authMode === "tokenless") {
+    return;
+  }
+
   const configuredToken = getConfiguredAdminToken();
   if (!configuredToken) {
     throw new AutonomyHttpError(
@@ -98,12 +201,23 @@ function redactSensitiveText(value: string) {
 }
 
 async function fetchJson(url: string) {
-  const response = await fetch(url);
-  const text = await response.text();
-  if (!response.ok) {
-    throw new Error(text || `Request failed with HTTP ${response.status}`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), getStatusFetchTimeoutMs());
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    const text = await response.text();
+    if (!response.ok) {
+      throw new Error(text || `Request failed with HTTP ${response.status}`);
+    }
+    return text ? JSON.parse(text) : null;
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error(`Request timed out while calling ${url}`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
-  return text ? JSON.parse(text) : null;
 }
 
 async function safeFetchJson(url: string) {
@@ -163,7 +277,9 @@ export async function getCompndAutonomyStatus() {
 
   return {
     timestamp: new Date().toISOString(),
-    adminConfigured: Boolean(getConfiguredAdminToken()),
+    adminAuthMode: getAdminAuthMode(),
+    adminConfigured: getAdminAuthMode() === "tokenless" || Boolean(getConfiguredAdminToken()),
+    adminRemoteAllowed: isRemoteAdminAllowed(),
     project: {
       key: PROJECT_KEY,
       name: PROJECT_NAME,
@@ -192,7 +308,6 @@ export async function startCompndAutonomyRun(input: {
   prompt: string;
   runId?: string;
   model?: string;
-  launchCodex?: boolean;
 }) {
   const prompt = String(input.prompt || "").trim();
   const model = String(input.model || "").trim();
@@ -225,7 +340,7 @@ export async function startCompndAutonomyRun(input: {
   ];
   if (runId) args.push("-RunId", runId);
   if (model) args.push("-Model", model);
-  if (input.launchCodex !== false) args.push("-LaunchCodex");
+  args.push("-LaunchCodex");
 
   const { stdout, stderr } = await execFileAsync("powershell.exe", args, {
     cwd: AUTONOMY_ROOT,
