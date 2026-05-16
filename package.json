@@ -1,5 +1,12 @@
 {
+  "name": "compnd-systems",
   "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "start": "tsx server.ts",
+    "preview": "vite preview --host 0.0.0.0"
+  },
   "dependencies": {
     "openai": "6.15.0",
     "react-ga4": "2.1.0",

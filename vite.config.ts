@@ -18,4 +18,13 @@ export default defineConfig(() => ({
   build: {
     assetsDir: "_assets",
   },
+  server: {
+    host: "127.0.0.1",
+    port: 5178,
+    strictPort: true,
+    proxy: {
+      "/_api": "http://localhost:3336",
+      "/api": "http://localhost:3336",
+    },
+  },
 }));
