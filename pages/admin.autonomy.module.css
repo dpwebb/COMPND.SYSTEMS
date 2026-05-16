@@ -1,0 +1,223 @@
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  font-family: var(--font-family-monospace);
+  color: var(--secondary);
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.title {
+  font-family: var(--font-family-heading);
+  color: var(--primary);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.9;
+}
+
+.headerPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+  border-radius: 999px;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-family: var(--font-family-monospace);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+.panel,
+.startPanel {
+  min-height: 100%;
+}
+
+.startPanel {
+  margin-bottom: var(--spacing-6);
+}
+
+.authBox,
+.startGrid,
+.statusGrid,
+.runList {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+.startGrid {
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.45fr);
+}
+
+.statusGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  display: grid;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-monospace);
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.select {
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+  padding: 0 var(--spacing-3);
+  font-family: var(--font-family-monospace);
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin: var(--spacing-4) 0;
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+}
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.statusItem {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing-3);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.statusItem span,
+.runRow p,
+.metaBlock,
+.emptyState,
+.blockedText {
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.82rem;
+}
+
+.statusItem strong {
+  display: block;
+  color: var(--foreground);
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  margin-top: 0.1rem;
+}
+
+.ok {
+  color: var(--success);
+}
+
+.bad {
+  color: var(--destructive);
+}
+
+.metaBlock {
+  margin-top: var(--spacing-4);
+  border-top: 1px dashed var(--border);
+  padding-top: var(--spacing-4);
+  display: grid;
+  gap: var(--spacing-2);
+  overflow-wrap: anywhere;
+}
+
+.errorBox,
+.successBox {
+  margin-top: var(--spacing-4);
+  border-radius: var(--radius);
+  padding: var(--spacing-3);
+  font-family: var(--font-family-monospace);
+}
+
+.errorBox {
+  color: var(--destructive);
+  border: 1px solid var(--destructive);
+  background: rgba(255, 0, 0, 0.08);
+}
+
+.successBox {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: var(--success);
+  border: 1px solid var(--success);
+  background: rgba(0, 255, 128, 0.08);
+}
+
+.runRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing-4);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.runRow strong {
+  color: var(--foreground);
+  font-family: var(--font-family-heading);
+  font-size: 1.05rem;
+}
+
+.runMeta {
+  display: grid;
+  gap: var(--spacing-1);
+  color: var(--secondary);
+  font-family: var(--font-family-monospace);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid,
+  .startGrid,
+  .statusGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .runRow {
+    flex-direction: column;
+  }
+
+  .runMeta {
+    text-align: left;
+  }
+}

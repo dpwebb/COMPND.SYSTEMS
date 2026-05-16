@@ -32,6 +32,7 @@ export const LcarsLayout = ({ children }: { children: React.ReactNode }) => {
       "/about": "Personnel",
       "/software": "Active Systems",
       "/services": "Operations",
+      "/admin/autonomy": "Admin Autonomy",
     };
     const pageName = pathToName[location.pathname] || location.pathname.substring(1);
     announceNavigation(pageName);
@@ -46,6 +47,7 @@ export const LcarsLayout = ({ children }: { children: React.ReactNode }) => {
     { label: "BLOG", path: "/blog" },
     { label: "ESTIMATE", path: "/estimate" },
     { label: "COMMUNICATIONS", path: "/contact" },
+    { label: "ADMIN", path: "/admin/autonomy" },
   ];
 
   return (
@@ -67,10 +69,14 @@ export const LcarsLayout = ({ children }: { children: React.ReactNode }) => {
                   to={item.path}
                   onClick={() => playClick()}
                   className={`${styles.navLink} ${
-                    location.pathname === item.path ? styles.active : ""
+                    location.pathname === item.path || (item.path === "/admin/autonomy" && location.pathname.startsWith("/admin"))
+                      ? styles.active
+                      : ""
                   }`}
                   aria-current={
-                    location.pathname === item.path ? "page" : undefined
+                    location.pathname === item.path || (item.path === "/admin/autonomy" && location.pathname.startsWith("/admin"))
+                      ? "page"
+                      : undefined
                   }
                 >
                   {item.label}

@@ -67,6 +67,8 @@ import Page_31 from "./pages/services.microservices-implementation.tsx";
 import PageLayout_31 from "./pages/services.microservices-implementation.pageLayout.tsx";
 import Page_32 from "./pages/services.high-performance-architecture.tsx";
 import PageLayout_32 from "./pages/services.high-performance-architecture.pageLayout.tsx";
+import Page_33 from "./pages/admin.autonomy.tsx";
+import PageLayout_33 from "./pages/admin.autonomy.pageLayout.tsx";
 
 if (!window.requestIdleCallback) {
   window.requestIdleCallback = (cb) => {
@@ -76,7 +78,7 @@ if (!window.requestIdleCallback) {
 
 import "./base.css";
 
-const fileNameToRoute = new Map([["./pages/$.tsx","/*"],["./pages/blog.tsx","/blog"],["./pages/about.tsx","/about"],["./pages/_index.tsx","/"],["./pages/contact.tsx","/contact"],["./pages/estimate.tsx","/estimate"],["./pages/services.tsx","/services"],["./pages/software.tsx","/software"],["./pages/case-studies.tsx","/case-studies"],["./pages/services.etl-pipelines.tsx","/services/etl-pipelines"],["./pages/services.api-management.tsx","/services/api-management"],["./pages/services.computer-vision.tsx","/services/computer-vision"],["./pages/services.iot-integration.tsx","/services/iot-integration"],["./pages/services.legacy-bridging.tsx","/services/legacy-bridging"],["./pages/services.ci-cd-automation.tsx","/services/ci-cd-automation"],["./pages/services.data-warehousing.tsx","/services/data-warehousing"],["./pages/services.esb-implementation.tsx","/services/esb-implementation"],["./pages/services.native-ios-android.tsx","/services/native-ios-android"],["./pages/services.big-data-processing.tsx","/services/big-data-processing"],["./pages/services.real-time-analytics.tsx","/services/real-time-analytics"],["./pages/services.security-compliance.tsx","/services/security-compliance"],["./pages/services.data-synchronization.tsx","/services/data-synchronization"],["./pages/services.multi-cloud-strategy.tsx","/services/multi-cloud-strategy"],["./pages/services.predictive-analytics.tsx","/services/predictive-analytics"],["./pages/services.react-native-flutter.tsx","/services/react-native-flutter"],["./pages/services.neural-network-design.tsx","/services/neural-network-design"],["./pages/services.full-cycle-development.tsx","/services/full-cycle-development"],["./pages/services.infrastructure-as-code.tsx","/services/infrastructure-as-code"],["./pages/services.offline-first-architecture.tsx","/services/offline-first-architecture"],["./pages/services.legacy-system-modernization.tsx","/services/legacy-system-modernization"],["./pages/services.natural-language-processing.tsx","/services/natural-language-processing"],["./pages/services.microservices-implementation.tsx","/services/microservices-implementation"],["./pages/services.high-performance-architecture.tsx","/services/high-performance-architecture"]]);
+const fileNameToRoute = new Map([["./pages/$.tsx","/*"],["./pages/blog.tsx","/blog"],["./pages/about.tsx","/about"],["./pages/_index.tsx","/"],["./pages/contact.tsx","/contact"],["./pages/estimate.tsx","/estimate"],["./pages/services.tsx","/services"],["./pages/software.tsx","/software"],["./pages/case-studies.tsx","/case-studies"],["./pages/services.etl-pipelines.tsx","/services/etl-pipelines"],["./pages/services.api-management.tsx","/services/api-management"],["./pages/services.computer-vision.tsx","/services/computer-vision"],["./pages/services.iot-integration.tsx","/services/iot-integration"],["./pages/services.legacy-bridging.tsx","/services/legacy-bridging"],["./pages/services.ci-cd-automation.tsx","/services/ci-cd-automation"],["./pages/services.data-warehousing.tsx","/services/data-warehousing"],["./pages/services.esb-implementation.tsx","/services/esb-implementation"],["./pages/services.native-ios-android.tsx","/services/native-ios-android"],["./pages/services.big-data-processing.tsx","/services/big-data-processing"],["./pages/services.real-time-analytics.tsx","/services/real-time-analytics"],["./pages/services.security-compliance.tsx","/services/security-compliance"],["./pages/services.data-synchronization.tsx","/services/data-synchronization"],["./pages/services.multi-cloud-strategy.tsx","/services/multi-cloud-strategy"],["./pages/services.predictive-analytics.tsx","/services/predictive-analytics"],["./pages/services.react-native-flutter.tsx","/services/react-native-flutter"],["./pages/services.neural-network-design.tsx","/services/neural-network-design"],["./pages/services.full-cycle-development.tsx","/services/full-cycle-development"],["./pages/services.infrastructure-as-code.tsx","/services/infrastructure-as-code"],["./pages/services.offline-first-architecture.tsx","/services/offline-first-architecture"],["./pages/services.legacy-system-modernization.tsx","/services/legacy-system-modernization"],["./pages/services.natural-language-processing.tsx","/services/natural-language-processing"],["./pages/services.microservices-implementation.tsx","/services/microservices-implementation"],["./pages/services.high-performance-architecture.tsx","/services/high-performance-architecture"],["./pages/admin.autonomy.tsx","/admin/autonomy"]]);
 const fileNameToComponent = new Map([
     ["./pages/$.tsx", Page_0],
 ["./pages/blog.tsx", Page_1],
@@ -111,6 +113,7 @@ const fileNameToComponent = new Map([
 ["./pages/services.natural-language-processing.tsx", Page_30],
 ["./pages/services.microservices-implementation.tsx", Page_31],
 ["./pages/services.high-performance-architecture.tsx", Page_32],
+["./pages/admin.autonomy.tsx", Page_33],
   ]);
 
 function makePageRoute(filename: string) {
@@ -244,6 +247,7 @@ export function App() {
 "./pages/services.natural-language-processing.tsx": PageLayout_30,
 "./pages/services.microservices-implementation.tsx": PageLayout_31,
 "./pages/services.high-performance-architecture.tsx": PageLayout_32,
+"./pages/admin.autonomy.tsx": PageLayout_33,
 }), fileNameToRoute, makePageRoute })} 
           <Route path="*" element={<NotFound />} />
         </Routes>
