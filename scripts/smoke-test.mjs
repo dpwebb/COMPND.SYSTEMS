@@ -14,6 +14,10 @@ function parseArgs(argv) {
   return args;
 }
 
+function parseBoolean(value) {
+  return ["1", "true", "yes", "on", "required"].includes(String(value || "").trim().toLowerCase());
+}
+
 function trimTrailingSlash(value) {
   return value.replace(/\/+$/, "");
 }
@@ -49,10 +53,13 @@ async function requireHtml(url, timeoutMs) {
   return { status: response.status, contentType };
 }
 
-async function requireBackendReachable(baseUrl, timeoutMs) {
+async function requireBackendReachable(baseUrl, timeoutMs, options = {}) {
   const healthUrl = getUrl(baseUrl, "/_api/health");
   const response = await fetchWithTimeout(healthUrl, timeoutMs);
   if (response.status === 404) {
+    if (options.requireHealth) {
+      throw new Error(`Required health endpoint missing at ${healthUrl}`);
+    }
     const rootResult = await requireHtml(baseUrl, timeoutMs);
     return {
       status: rootResult.status,
@@ -143,6 +150,7 @@ async function main() {
   const frontendUrl = process.env.COMPND_SMOKE_FRONTEND_URL || args.frontend || DEFAULT_FRONTEND_URL;
   const backendUrl = process.env.COMPND_SMOKE_BACKEND_URL || args.backend || DEFAULT_BACKEND_URL;
   const timeoutMs = Number(process.env.COMPND_SMOKE_TIMEOUT_MS || args.timeout || DEFAULT_TIMEOUT_MS);
+  const requireHealth = parseBoolean(process.env.COMPND_SMOKE_REQUIRE_HEALTH || args["require-health"]);
 
   if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
     throw new Error("Timeout must be a positive number.");
@@ -159,7 +167,7 @@ async function main() {
     {
       label: "backend-health",
       run: async () => {
-        const result = await requireBackendReachable(backendUrl, timeoutMs);
+        const result = await requireBackendReachable(backendUrl, timeoutMs, { requireHealth });
         return `status=${result.status} mode=${result.mode} service=${result.service}`;
       },
     },

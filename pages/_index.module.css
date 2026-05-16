@@ -102,6 +102,80 @@
   height: var(--spacing-12);
 }
 
+.applicationsSection {
+  margin-bottom: var(--spacing-4);
+}
+
+.applicationsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-4);
+}
+
+.applicationCard {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  min-width: 0;
+  padding: var(--spacing-5);
+}
+
+.applicationCardHeader {
+  align-items: center;
+  color: var(--secondary);
+  display: flex;
+  font-family: var(--font-family-monospace);
+  font-size: 0.72rem;
+  justify-content: space-between;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.applicationCard h3 {
+  color: var(--primary);
+  font-family: var(--font-family-heading);
+  font-size: 1.2rem;
+  line-height: 1.1;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.applicationCard p {
+  color: var(--muted);
+  flex: 1;
+  font-family: var(--font-family-monospace);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.applicationMeta {
+  border-top: 1px dashed var(--border);
+  display: grid;
+  gap: var(--spacing-1);
+  min-width: 0;
+  padding-top: var(--spacing-3);
+}
+
+.applicationMeta span {
+  color: var(--foreground);
+  font-family: var(--font-family-monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.applicationMeta strong {
+  color: var(--secondary);
+  font-family: var(--font-family-monospace);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
 .servicesGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -282,6 +356,11 @@
 
   .sectionSpacer {
     height: var(--spacing-6);
+  }
+
+  .applicationsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-3);
   }
 
   .servicesGrid {

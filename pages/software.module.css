@@ -6,12 +6,26 @@
   flex-wrap: wrap;
 }
 
+.headerText {
+  display: grid;
+  gap: var(--spacing-2);
+}
+
+.eyebrow {
+  font-family: var(--font-family-monospace);
+  color: var(--secondary);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  margin: 0;
+}
+
 .title {
   font-family: var(--font-family-heading);
   font-size: 3rem;
   color: var(--primary);
   white-space: nowrap;
   line-height: 1;
+  margin: 0;
 }
 
 .decorLine {
@@ -43,12 +57,54 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--spacing-6);
 }
 
 .panel {
   height: 100%;
+}
+
+.filterPanel {
+  margin-bottom: var(--spacing-6);
+}
+
+.filterRow {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.filterButton {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--spacing-2) var(--spacing-3);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.filterButton:hover,
+.activeFilter {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: black;
+}
+
+.catalogNote {
+  margin: var(--spacing-3) 0 0;
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .panelAction {
@@ -58,7 +114,7 @@
   padding-right: var(--spacing-2);
 }
 
-.version {
+.accessBadge {
   font-family: var(--font-family-monospace);
   font-size: 0.75rem;
   background-color: rgba(0, 0, 0, 0.3);
@@ -97,18 +153,22 @@
 .iconBox.secondary { color: var(--secondary); }
 .iconBox.accent { color: var(--accent); }
 .iconBox.info { color: var(--info); }
+.iconBox.muted { color: var(--muted); }
 
-.headerText {
+.cardTitleBlock {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-1);
+  min-width: 0;
 }
 
 .cardTitle {
   font-family: var(--font-family-heading);
   font-size: 1.5rem;
   color: var(--foreground);
-  line-height: 1;
+  line-height: 1.05;
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .cardSubtitle {
@@ -133,10 +193,54 @@
   flex: 1;
 }
 
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-3);
+}
+
+.metaGrid div {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-3);
+  background: rgba(0, 0, 0, 0.18);
+  min-width: 0;
+}
+
+.metaGrid span {
+  display: block;
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-1);
+}
+
+.metaGrid strong {
+  display: block;
+  color: var(--foreground);
+  font-family: var(--font-family-monospace);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.complianceNote {
+  border-left: 3px solid var(--accent);
+  padding-left: var(--spacing-3);
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
 .statusRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--spacing-3);
   margin-top: auto;
   padding-top: var(--spacing-4);
   border-top: 1px dashed var(--border);
@@ -151,13 +255,15 @@
   color: var(--success);
 }
 
-.pulseIcon {
-  animation: pulse 2s infinite;
+.actionRow {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
-.systemId {
-  color: var(--muted);
-  opacity: 0.7;
+.pulseIcon {
+  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
@@ -190,5 +296,18 @@
   .cardHeader {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .metaGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statusRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .actionRow {
+    justify-content: flex-start;
   }
 }

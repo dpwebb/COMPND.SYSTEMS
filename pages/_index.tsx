@@ -5,11 +5,18 @@ import { Button } from "../components/Button";
 import { LcarsPanel } from "../components/LcarsPanel";
 import { NewsletterSignup } from "../components/NewsletterSignup";
 import { LandingAiSection } from "../components/LandingAiSection";
-import { Cpu, Globe, Layers, Zap } from "lucide-react";
+import { Activity, ArrowRight, Cpu, Globe, Layers, Zap } from "lucide-react";
 import { RunningCodeVisual } from "../components/RunningCodeVisual";
+import {
+  appAccessLabels,
+  featuredDirectoryApps,
+  getAppDomainLabel,
+} from "../helpers/appCatalog";
 import styles from "./_index.module.css";
 
 export default function LandingPage() {
+  const featuredApps = featuredDirectoryApps.slice(0, 6);
+
   return (
     <>
       <Helmet>
@@ -29,7 +36,7 @@ export default function LandingPage() {
             <br />
             Full Stop.
           </h1>
-                              <p className={styles.heroSubtitle}>
+          <p className={styles.heroSubtitle}>
             SOLVING COMPLEX CHALLENGES. BUILDING WHAT MATTERS. ARCHITECTING TOMORROW.
           </p>
           <div className={styles.heroActions}>
@@ -42,7 +49,7 @@ export default function LandingPage() {
               size="lg"
               className={styles.secondaryButton}
             >
-              <Link to="/services">BROWSE DATABASE</Link>
+              <Link to="/apps">VIEW APPLICATIONS</Link>
             </Button>
           </div>
         </div>
@@ -52,6 +59,54 @@ export default function LandingPage() {
           <div className={styles.scannerLine} />
         </div>
       </div>
+
+      <div className={styles.sectionSpacer} />
+
+      <section className={styles.applicationsSection} aria-labelledby="applications-heading">
+        <h2 id="applications-heading" className={styles.srOnly}>FEATURED APPLICATIONS</h2>
+        <LcarsPanel
+          title="FEATURED APPLICATIONS"
+          color="secondary"
+          action={
+            <Button asChild size="sm" variant="ghost">
+              <Link to="/apps">
+                All Apps
+                <ArrowRight size={14} />
+              </Link>
+            </Button>
+          }
+        >
+          <div className={styles.applicationsGrid} role="list">
+            {featuredApps.map((app) => (
+              <article
+                key={app.slug}
+                className={styles.applicationCard}
+                role="listitem"
+                aria-labelledby={`featured-${app.slug}`}
+              >
+                <div className={styles.applicationCardHeader}>
+                  <span>{appAccessLabels[app.access]}</span>
+                  <Activity size={16} aria-hidden="true" />
+                </div>
+                <h3 id={`featured-${app.slug}`}>{app.name}</h3>
+                <p>{app.shortDescription}</p>
+                <div className={styles.applicationMeta}>
+                  <span>{app.statusLabel}</span>
+                  <strong>{getAppDomainLabel(app)}</strong>
+                </div>
+                {app.publicRoute && (
+                  <Button asChild size="sm" variant="outline">
+                    <Link to={app.publicRoute}>
+                      Details
+                      <ArrowRight size={14} />
+                    </Link>
+                  </Button>
+                )}
+              </article>
+            ))}
+          </div>
+        </LcarsPanel>
+      </section>
 
       <div className={styles.sectionSpacer} />
 
@@ -152,7 +207,7 @@ export default function LandingPage() {
       <footer className={styles.footer} role="contentinfo">
         <div className={styles.footerBar} aria-hidden="true" />
         <div className={styles.footerContent}>
-          <span>COMPND.SYSTEMS © 2401</span>
+          <span>COMPND.SYSTEMS (C) 2401</span>
           <span>LCARS INTERFACE V4.2</span>
           <span>AUTHORIZED PERSONNEL ONLY</span>
         </div>

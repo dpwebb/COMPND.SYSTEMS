@@ -228,12 +228,30 @@ export type HubApp = {
 - Add `/apps` route or make `/software` the application directory with a future redirect plan.
 - Mark staging, private, lab, and compliance-sensitive apps with non-launch CTAs such as `Request Access`, `View Details`, or `Coming Soon`.
 
+### Phase 1 Progress
+
+- Added `helpers/appCatalog.ts` as the shared hub catalog source for all 12 registered Codex projects.
+- Converted `/software` from a hardcoded software list into a catalog-driven Applications directory.
+- Added `/apps` as the preferred public route while keeping `/software` available for continuity.
+- Renamed the main navigation item from Software to Applications.
+- Added non-launch CTAs for staging, private, lab, planned, and compliance-sensitive projects.
+- Kept CreditRegulatorPro staging in the catalog data but hidden from the public directory.
+
 ### Phase 2: Public App Pages
 
 - Add one detail page per active app.
 - Add app-specific metadata for SEO and sharing.
 - Update `static/sitemap.xml` with public app detail routes.
 - Keep staging or invite-only URLs out of the sitemap.
+
+### Phase 2 Progress
+
+- Added catalog-driven `/apps/:slug` detail pages for directory applications.
+- Added app-specific titles, descriptions, access status, domain plans, repository metadata, support routes, and exposure notes.
+- Marked private and invite-only detail pages `noindex,nofollow` when reachable from the directory.
+- Updated public sitemap entries for indexable application detail routes only.
+- Added featured application cards to the homepage using the shared catalog.
+- Added catalog validation and generated sitemap scripts so route changes cannot drift from `helpers/appCatalog.ts`.
 
 ### Phase 3: DNS And Deployment Routing
 
@@ -242,6 +260,12 @@ export type HubApp = {
 - Point each subdomain to the correct production deployment target.
 - Configure HTTPS certificates for every subdomain.
 - Add protected staging subdomains only when needed.
+
+### Phase 3 Preparation
+
+- Added `docs/domain-readiness.md` as the DNS, HTTPS, launch, and support checklist for hub-linked projects.
+- Kept every non-hub app `launchLive: false` until its final production domain is verified.
+- Documented which app detail pages are public sitemap entries and which remain private/noindex.
 
 ### Phase 4: Status And Support
 
@@ -287,11 +311,11 @@ For each app with a formal domain:
 
 ## Recommended Next Implementation Step
 
-Start with Phase 1:
+Phase 1 foundation and the first Phase 2 pass are now implemented in code. Continue with Phase 2 hardening and Phase 3 preparation:
 
-1. Create `helpers/appCatalog.ts`.
-2. Convert the current `/software` page into an application directory.
-3. Add catalog entries for all registered Codex projects from `C:\Users\webbd\Projects\codex-projects.json`.
-4. Feature Akashic Research Engine, DW Music Hub, CreditRegulatorPro, Fleet Guru, IP Governance, and PulpHub when their public launch state is ready.
-5. Add launch CTAs using known formal domains where available and `compnd.systems` subdomain placeholders where not yet assigned.
-6. Use non-launch CTAs for staging, private, lab, and compliance-sensitive projects.
+1. Replace placeholder capability copy with project-owned product copy and screenshots.
+2. Add screenshots or product imagery for each app once available.
+3. Confirm final access policy for invite-only and private app detail pages.
+4. Audit DNS for the proposed `compnd.systems` subdomains before any launch CTA is marked live.
+5. Add per-app readiness checks before setting any catalog `launchLive` flag to `true`.
+6. Begin DNS/HTTPS verification against `docs/domain-readiness.md` when the deployment targets are available.

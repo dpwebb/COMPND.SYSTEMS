@@ -7,7 +7,7 @@ COMPND.SYSTEMS is currently suitable for local and staging validation. Public pr
 | Gate | Status | Notes |
 | --- | --- | --- |
 | Static build | Passing | `pnpm run build` completes locally. |
-| Smoke test | Passing | `pnpm smoke:test` checks frontend HTML, backend health, backend readiness, and admin status guard. |
+| Smoke test | Passing | `pnpm smoke:test` checks frontend HTML, backend health, backend readiness, and admin status guard; `pnpm smoke:prod` requires the health endpoint. |
 | Dependency audit | Passing for high severity | `pnpm audit --audit-level high` passes; one low issue remains. |
 | CI | Added | `.github/workflows/ci.yml` builds, audits, starts the server, and runs smoke tests. |
 | Frontend bundle | Improved | Route pages are lazy-loaded; the main JS chunk is below the previous 500 kB warning threshold. |
@@ -48,7 +48,7 @@ Before promoting a build:
    - `NODE_ENV=production`
    - `COMPND_ENABLE_ADMIN_AUTONOMY=false`
    - `COMPND_API_PORT=3336`
-5. `pnpm smoke:prod`
+5. `pnpm smoke:prod` to require production health, readiness, and guard checks.
 6. Confirm `/_api/admin/autonomy/status` returns a guarded response in production.
 7. Confirm `/_api/ai/command` rejects oversized bodies and rate-limits repeated requests.
 8. Confirm logs do not print secrets or raw token values.

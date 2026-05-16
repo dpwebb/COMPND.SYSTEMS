@@ -1,5 +1,17 @@
 # Future Build Plan
 
+## Hub Build Plan Progress
+
+- `https://compnd.systems` is the hub domain for all registered Codex projects.
+- Phase 1 foundation is implemented with `helpers/appCatalog.ts` and a catalog-driven Applications directory.
+- `/apps` is the preferred public application directory route; `/software` remains available for continuity.
+- `/apps/:slug` provides catalog-driven application detail pages, with private and invite-only pages marked noindex.
+- The homepage now features selected applications from the shared catalog.
+- `pnpm run catalog:validate` and `pnpm run sitemap:generate` keep the public hub catalog and sitemap aligned.
+- `docs/domain-readiness.md` tracks the DNS, HTTPS, support, and launch gates for each proposed app domain.
+- Public apps can link to their own formal domains, while apps without formal domains can use planned `compnd.systems` subdomains.
+- Staging, private, lab, and compliance-sensitive projects stay tracked in the catalog without public launch CTAs.
+
 <!-- AUTONOMY_HANDOFF_START -->
 ## Autonomy Handoff
 

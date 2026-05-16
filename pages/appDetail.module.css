@@ -1,0 +1,173 @@
+.detailHeader {
+  display: grid;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+}
+
+.backButton {
+  width: fit-content;
+}
+
+.eyebrow {
+  color: var(--secondary);
+  font-family: var(--font-family-monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.titleRow h1 {
+  color: var(--primary);
+  font-family: var(--font-family-heading);
+  font-size: 3rem;
+  line-height: 1;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.titleRow span {
+  background: var(--secondary);
+  border-radius: var(--radius-sm);
+  color: black;
+  font-family: var(--font-family-monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: var(--spacing-2) var(--spacing-3);
+  text-transform: uppercase;
+}
+
+.summary {
+  border-left: 3px solid var(--accent);
+  color: var(--foreground);
+  font-family: var(--font-family-monospace);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 850px;
+  padding-left: var(--spacing-4);
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.panelGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+.profileGrid,
+.launchMatrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-3);
+}
+
+.profileGrid div,
+.launchMatrix div {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  min-width: 0;
+  padding: var(--spacing-3);
+}
+
+.profileGrid span,
+.launchMatrix span {
+  color: var(--muted);
+  display: block;
+  font-family: var(--font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--spacing-1);
+  text-transform: uppercase;
+}
+
+.profileGrid strong,
+.launchMatrix strong {
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-family: var(--font-family-monospace);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.capabilityList {
+  display: grid;
+  gap: var(--spacing-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.capabilityList li {
+  align-items: flex-start;
+  color: var(--foreground);
+  display: flex;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-monospace);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.capabilityList svg {
+  color: var(--secondary);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.exposureBlock {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.exposureBlock svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.exposureBlock p,
+.notFound p {
+  color: var(--muted);
+  font-family: var(--font-family-monospace);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 var(--spacing-4);
+}
+
+.notFound {
+  max-width: 760px;
+}
+
+@media (max-width: 1024px) {
+  .panelGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .titleRow h1 {
+    font-size: 2.2rem;
+  }
+
+  .profileGrid,
+  .launchMatrix {
+    grid-template-columns: 1fr;
+  }
+}

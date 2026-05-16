@@ -30,18 +30,20 @@ export const LcarsLayout = ({ children }: { children: React.ReactNode }) => {
       "/blog": "Incoming Transmissions",
       "/case-studies": "Mission Logs",
       "/about": "Personnel",
-      "/software": "Active Systems",
+      "/apps": "Applications",
+      "/software": "Applications",
       "/services": "Operations",
       "/admin/autonomy": "Admin Autonomy",
     };
-    const pageName = pathToName[location.pathname] || location.pathname.substring(1);
+    const pageName = pathToName[location.pathname] ||
+      (location.pathname.startsWith("/apps/") ? "Application Detail" : location.pathname.substring(1));
     announceNavigation(pageName);
   }, [location.pathname, playTransition, announceNavigation]);
 
   const navItems = [
     { label: "SYSTEM MAIN", path: "/" },
     { label: "OPERATIONS", path: "/services" },
-    { label: "SOFTWARE", path: "/software" },
+    { label: "APPLICATIONS", path: "/apps" },
     { label: "ABOUT", path: "/about" },
     { label: "CASE STUDIES", path: "/case-studies" },
     { label: "BLOG", path: "/blog" },
@@ -49,6 +51,12 @@ export const LcarsLayout = ({ children }: { children: React.ReactNode }) => {
     { label: "COMMUNICATIONS", path: "/contact" },
     { label: "ADMIN", path: "/admin/autonomy" },
   ];
+
+  const isActiveNavItem = (path: string) =>
+    location.pathname === path ||
+    (path === "/apps" && location.pathname.startsWith("/apps/")) ||
+    (path === "/apps" && location.pathname === "/software") ||
+    (path === "/admin/autonomy" && location.pathname.startsWith("/admin"));
 
   return (
     <div className={styles.container}>
@@ -69,12 +77,12 @@ export const LcarsLayout = ({ children }: { children: React.ReactNode }) => {
                   to={item.path}
                   onClick={() => playClick()}
                   className={`${styles.navLink} ${
-                    location.pathname === item.path || (item.path === "/admin/autonomy" && location.pathname.startsWith("/admin"))
+                    isActiveNavItem(item.path)
                       ? styles.active
                       : ""
                   }`}
                   aria-current={
-                    location.pathname === item.path || (item.path === "/admin/autonomy" && location.pathname.startsWith("/admin"))
+                    isActiveNavItem(item.path)
                       ? "page"
                       : undefined
                   }
