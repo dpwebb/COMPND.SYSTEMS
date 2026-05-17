@@ -9,7 +9,13 @@ These items are carried forward automatically into the next COMPND autonomy run.
 - `pnpm smoke:prod` passes with `backend-health mode=health-endpoint`.
 - Production smoke is now strict: `pnpm smoke:prod` passes `--require-health`, so missing `/_api/health` fails instead of using the legacy fallback.
 - Manual admin branch verification passed for loopback tokenless access, default remote `403`, explicit remote allow, token-mode `401`, and valid-token access.
-- Remaining follow-up: add focused tests for admin security branches and status timeout behavior when test infrastructure is available.
+- Added repeatable tests for admin security branches and autonomy status timeout behavior.
+- CI and `pnpm run verify` now run the admin/autonomy test suite before build and audit gates.
+- `pnpm run verify` passes locally; high-severity audit remains clear with one low-severity advisory.
+- Added denied-request audit logging for admin autonomy endpoints without token or credential values.
+- Added `pnpm run domain:check` as a DNS/HTTPS launch gate for `launchLive` catalog entries.
+- Added `pnpm run domain:check:planned` as an informational audit of proposed app subdomains.
+- Remaining follow-up: use the domain readiness output to configure DNS/HTTPS targets before any non-hub app catalog `launchLive` flag changes.
 
 ## Priority 1: COMPND-20260516161459
 

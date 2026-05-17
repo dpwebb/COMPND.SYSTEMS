@@ -94,7 +94,7 @@ function isRemoteAdminAllowed() {
   );
 }
 
-function getStatusFetchTimeoutMs() {
+export function getCompndAutonomyStatusTimeoutMs() {
   const rawValue = process.env.COMPND_AUTONOMY_STATUS_TIMEOUT_MS || "";
   const parsed = Number(rawValue);
   if (!Number.isFinite(parsed)) {
@@ -164,6 +164,31 @@ function getRequestHostname(request: Request) {
   }
 }
 
+function getRequestPathname(request: Request) {
+  try {
+    return new URL(request.url).pathname;
+  } catch {
+    return "";
+  }
+}
+
+function getAdminRequestNetworkClass(request: Request) {
+  const hostname = getRequestHostname(request);
+  const forwardedFor = firstCsvValue(request.headers.get("x-forwarded-for") || "");
+  const realIp = request.headers.get("x-real-ip") || "";
+  const hostAllowed = Boolean(hostname) && isLoopbackAddress(hostname);
+  const forwardedAllowed = !forwardedFor || isLoopbackAddress(forwardedFor);
+  const realIpAllowed = !realIp || isLoopbackAddress(realIp);
+
+  if (hostAllowed && forwardedAllowed && realIpAllowed) {
+    return "loopback";
+  }
+  if (hostname || forwardedFor || realIp) {
+    return "remote";
+  }
+  return "unknown";
+}
+
 function assertCompndAutonomyLoopbackAccess(request: Request) {
   if (isRemoteAdminAllowed()) {
     return;
@@ -205,6 +230,32 @@ export function assertCompndAutonomyAdmin(request: Request) {
   if (!requestToken || !safeTokenEquals(requestToken, configuredToken)) {
     throw new AutonomyHttpError(401, "Admin autonomy token is required.");
   }
+}
+
+export function auditCompndAutonomyAdminFailure(request: Request, error: unknown) {
+  if (!(error instanceof AutonomyHttpError)) {
+    return;
+  }
+
+  const record = {
+    timestamp: new Date().toISOString(),
+    level: "warn",
+    event: "admin_autonomy_request_denied",
+    status: error.status,
+    reason: error.message,
+    method: request.method,
+    path: getRequestPathname(request),
+    requestId: request.headers.get("x-request-id") || "",
+    authMode: getAdminAuthMode(),
+    remoteAllowed: isRemoteAdminAllowed(),
+    network: getAdminRequestNetworkClass(request),
+    tokenProvided: Boolean(getRequestAdminToken(request)),
+    forwardedForPresent: Boolean(firstCsvValue(request.headers.get("x-forwarded-for") || "")),
+    realIpPresent: Boolean(request.headers.get("x-real-ip") || ""),
+    userAgentPresent: Boolean(request.headers.get("user-agent") || ""),
+  };
+
+  console.warn(JSON.stringify(record));
 }
 
 function cleanRunId(value: string) {
@@ -262,9 +313,9 @@ function isCompletedRun(run: RunnerRun) {
   return status.includes("completed") || eventType.includes("completed");
 }
 
-async function fetchJson(url: string) {
+export async function fetchCompndAutonomyJson(url: string) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), getStatusFetchTimeoutMs());
+  const timeout = setTimeout(() => controller.abort(), getCompndAutonomyStatusTimeoutMs());
   try {
     const response = await fetch(url, { signal: controller.signal });
     const text = await response.text();
@@ -284,7 +335,7 @@ async function fetchJson(url: string) {
 
 async function safeFetchJson(url: string) {
   try {
-    return { ok: true, data: await fetchJson(url) };
+    return { ok: true, data: await fetchCompndAutonomyJson(url) };
   } catch (error) {
     return { ok: false, error: error instanceof Error ? error.message : String(error) };
   }

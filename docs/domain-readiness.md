@@ -26,7 +26,8 @@ Before setting a catalog entry to `launchLive: true`:
 8. Update `helpers/appCatalog.ts`.
 9. Run `pnpm run catalog:validate`.
 10. Run `pnpm run sitemap:generate`.
-11. Run `pnpm run build` and `pnpm smoke:test`.
+11. Run `pnpm run domain:check` to verify DNS and HTTPS for every `launchLive` app.
+12. Run `pnpm run build` and `pnpm smoke:test`.
 
 ## Proposed Subdomain Matrix
 
@@ -64,7 +65,11 @@ Private, invite-only, staging, lab, and compliance-gated app pages remain exclud
 
 ```powershell
 pnpm run catalog:validate
+pnpm run domain:check
+pnpm run domain:check:planned
 pnpm run sitemap:generate
 pnpm run build
 pnpm smoke:test
 ```
+
+Use `pnpm run domain:check` as the required launch gate before changing an app to `launchLive: true`. It checks only currently live catalog entries and fails on live DNS or HTTPS problems. Use `pnpm run domain:check:planned` as an informational audit of proposed subdomains; planned and gated apps may fail until DNS, hosting, and HTTPS are intentionally configured.

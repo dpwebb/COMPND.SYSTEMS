@@ -6,11 +6,15 @@
     "build": "pnpm run catalog:validate && pnpm run sitemap:generate && vite build",
     "start": "tsx server.ts",
     "preview": "vite preview --host 0.0.0.0",
+    "test": "node --import tsx --test tests/compndAutonomyBridge.test.ts",
     "catalog:validate": "tsx scripts/validate-app-catalog.ts",
+    "domain:check": "tsx scripts/check-domain-readiness.ts",
+    "domain:check:planned": "tsx scripts/check-domain-readiness.ts --include-planned",
     "sitemap:generate": "tsx scripts/generate-sitemap.ts",
     "smoke:test": "node scripts/smoke-test.mjs",
     "smoke:prod": "node scripts/smoke-test.mjs --frontend=http://127.0.0.1:3336 --backend=http://127.0.0.1:3336 --require-health",
-    "verify": "pnpm run build && pnpm audit --audit-level high"
+    "launch:check": "pnpm run verify && pnpm run domain:check",
+    "verify": "pnpm test && pnpm run build && pnpm audit --audit-level high"
   },
   "dependencies": {
     "openai": "6.15.0",

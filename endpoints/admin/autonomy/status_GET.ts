@@ -1,5 +1,6 @@
 import {
   assertCompndAutonomyAdmin,
+  auditCompndAutonomyAdminFailure,
   AutonomyHttpError,
   getCompndAutonomyStatus,
 } from "../../../helpers/compndAutonomyBridge";
@@ -16,6 +17,7 @@ export async function handle(request: Request) {
     assertCompndAutonomyAdmin(request);
     return json(await getCompndAutonomyStatus());
   } catch (error) {
+    auditCompndAutonomyAdminFailure(request, error);
     const status = error instanceof AutonomyHttpError ? error.status : 500;
     return json({ error: error instanceof Error ? error.message : String(error) }, status);
   }
