@@ -35,6 +35,8 @@ pnpm tsx server.ts
 
 This project is not yet approved for public production at scale. Use [docs/production-readiness.md](docs/production-readiness.md) as the current release gate checklist.
 
+For the current admin-facing inventory of routes, features, APIs, catalog behavior, autonomy controls, commands, and operational gaps, use [docs/admin-kb.md](docs/admin-kb.md).
+
 Minimum validation before promotion:
 
 ```
